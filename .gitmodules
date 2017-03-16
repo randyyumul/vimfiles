@@ -1,0 +1,24 @@
+[submodule "pack/bundles/start/ctrlp.vim"]
+	path = pack/bundles/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "pack/bundles/start/vim-commentary"]
+	path = pack/bundles/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "pack/bundles/start/vim-easy-align"]
+	path = pack/bundles/start/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align.git
+[submodule "pack/bundles/start/vim-fugitive"]
+	path = pack/bundles/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "pack/bundles/start/vim-gutentags"]
+	path = pack/bundles/start/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "pack/bundles/start/vim-repeat"]
+	path = pack/bundles/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "pack/bundles/start/vim-surround"]
+	path = pack/bundles/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "pack/bundles/start/vim-unimpaired"]
+	path = pack/bundles/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
