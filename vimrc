@@ -34,6 +34,7 @@ if version == 800
 endif
 set cmdheight=2                          " number of lines to use for the command-line
 set dictionary+=~/dotfiles/spell/en.utf-8.add
+set spellfile=~/dotfiles/spell/en.utf-8.add
 set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
