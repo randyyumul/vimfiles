@@ -33,8 +33,10 @@ if version == 800
     set belloff=all                      " disallow annoying bell sound
 endif
 set cmdheight=2                          " number of lines to use for the command-line
-set dictionary+=~/dotfiles/spell/en.utf-8.add
-set spellfile=~/dotfiles/spell/en.utf-8.add
+if findfile("~/dotfiles/spell/en.utf-8.add") != ""
+    set dictionary+=~/dotfiles/spell/en.utf-8.add
+    set spellfile=~/dotfiles/spell/en.utf-8.add
+endif
 set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
