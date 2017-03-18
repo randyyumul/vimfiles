@@ -1,0 +1,2 @@
+set background=dark
+nnoremap <silent> <Leader>et :edit ~/Dropbox/Apps/TaskAgent/HomeTodo.txt
