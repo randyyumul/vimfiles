@@ -266,6 +266,10 @@ nnoremap <silent> <Leader>ez :edit $HOME<CR>
 " edit latest log
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 
+" date command
+command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
+command! Time :normal a<C-R>=strftime("\%H:\%M:\%S")<CR>
+
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
 nnoremap <Leader>Y% :let @+=expand('%:p')<CR>:let @"=expand('%:p')<CR>
