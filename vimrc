@@ -395,7 +395,7 @@ iabbrev HACK HACK HACK HACK
 
 " print a long commented line
 iabbrev //- //-------------------------------------------------------------------------
-iabbrev /// //---------------------------------
+command! Title call PutTitle()
 
 nnoremap <Leader>= yypVr-==
 
@@ -575,6 +575,12 @@ function! EpochToDateTime()
 endfunction
 
 command! Prose call toggles#ProseToggle()
+
+function! PutTitle()
+        normal! cc//-------------------------------------------------------------------------
+        normal! 10|
+        startreplace
+endfunction
 
 " easy logging {{{1
 function! SetDebugRegisters()
