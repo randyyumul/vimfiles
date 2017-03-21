@@ -163,9 +163,7 @@ nnoremap Y y$
 nnoremap <C-C> "+yy
 vnoremap <C-C> "+y
 noremap  <C-V> "+p
-
-" easier pasting from clipboard {{{2
-inoremap <F1> <C-R>+
+inoremap <C-B> <Esc>"+p
 
 " better way to press escape: {{{2
 inoremap jj <Esc>
