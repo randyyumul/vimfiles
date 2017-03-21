@@ -1,7 +1,7 @@
 " ------------------------------------------------
 " Randy Yumul's amazon vimrc
 " ------------------------------------------------
-"
+
 filetype off
 
 " must do this before any other mappings
