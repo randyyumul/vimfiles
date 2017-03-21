@@ -602,8 +602,7 @@ autocmd VimEnter :call SetDebugRegisters()<CR>
 "         /abc\_.\{-}def
 
 "         /<!--\_.\{-}-->
-" The atom \_. finds any character including end-of-line. The multi \{-} matches as few as possible 
-" (stopping at the first "-->"; the multi * is too greedy and would stop at the last occurrence).
+" The atom \_. finds any character including end-of-line. 
 "  
 " ------ looping over a whole file:  {{{2
 " :while line('.') != line('$') | exec "normal \<C-F>" | redraw | sleep 1 | endwhile
