@@ -68,3 +68,20 @@ function util#LogDate()
     normal [fgg
 endfunction
 
+" set modifiable state of buffer to match readonly state (unless overridden manually)
+function! util#UpdateModifiable()
+	if &readonly
+		setlocal nomodifiable
+	else
+		setlocal modifiable
+	endif
+endfunction
+
+" convert a unix time to human readable format
+function! util#EpochToDateTime()
+    call search('\d\{10}')
+    normal! ye
+    execute 'r!date -u -jf "\%s" ' . @0 . ' "\%a \%b \%d \%T \%Z \%Y"'
+    normal! kJ
+endfunction
+
