@@ -1,2 +1,3 @@
 set background=dark
-nnoremap <silent> <Leader>et :edit ~/Dropbox/Apps/TaskAgent/HomeTodo.txt
+nnoremap <silent> <Leader>et :edit ~/Dropbox/Apps/TaskAgent/HomeTodo.txt<CR>
+autocmd BufNewFile,BufRead *Todo.txt,GroceryList.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
