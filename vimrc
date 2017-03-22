@@ -14,7 +14,6 @@ xnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  '
 
 nnoremap <Leader>h :noh<CR>
 xnoremap <Leader>h :<C-U>noh<CR><ESC>gv
-nnoremap <Leader>; yiw<C-W>vgg/<C-R>0<CR>:noh<CR>
 
 " reset all autocmds
 autocmd!
@@ -25,13 +24,11 @@ set autochdir                            " automatically cd to dir of file in cu
 
 set sessionoptions-=options
 
-autocmd BufReadPost * call UpdateModifiable()
+autocmd BufReadPost * call util#UpdateModifiable()
 
 " UI {{{1
 set backspace=eol,start,indent           " make backspace better
-if version == 800
-    set belloff=all                      " disallow annoying bell sound
-endif
+set belloff=all                          " disallow annoying bell sound
 set cmdheight=2                          " number of lines to use for the command-line
 if findfile("~/dotfiles/spell/en.utf-8.add") != ""
     set dictionary+=~/dotfiles/spell/en.utf-8.add
@@ -42,13 +39,10 @@ set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
 set mouse=a                              " allow use of mouse
 set number                               " Turn on line numbering
-set nrformats-=alpha
 if version == 800
 	set relativenumber                       " Turn on relative line numbering
 endif
 set shortmess=imt                        " clean up the 'Press ENTER ...' prompts
-set showmode                             " show -- INSERT --, etc.
-set showcmd                              " show stuff in the status line area
 set splitright                           " new window is put right of the current one
 set title                                " set terminal title
 set undofile                             " automatically save undo history to an undo file when writing a buffer to a file
@@ -65,7 +59,6 @@ set wildmode=list:longest,full           " set file/command completion mode
 										 " full"              Complete the next full match.  After the last match,
 										 "                    the original string is used and then the first match
 										 "                    again.
-set wildignore=*.meta,*.swp,*.bak        " ignore these files when auto-completing files
 set wildcharm=<C-Z>
 set nowrap                               " default to display no line wrapping
 set fillchars=""                         " get rid of the characters in window separators
@@ -94,16 +87,7 @@ set noswapfile                           " I almost never look at these anyway
 
 runtime macros/matchit.vim           " extend % matching (on osx, better to copy plugin into .vim directory)
 
-" suppress DoMatchParen
-let loaded_matchparen = 1
-
 colorscheme default
-" run this command to set all the different color schemes that I like
-if exists(":SetColors")
-    SetColors badwolf jellybeans solarized desert zellner morning asmdev koehler ChocolateLiquor molokai zenburn evening torte darkeclipse kalisi primary
-    " run this to reset to using all installed colorschemes
-    " SetColors all
-endif
 " set background coloring
 if findfile("~/.vimrc.local") != ""
 	source ~/.vimrc.local
@@ -127,9 +111,6 @@ endif
 " easier exiting of cmd window
 autocmd CmdwinEnter * nnoremap <buffer> q :q<CR>
 set cmdwinheight=11   " show last 10 items in cmdwin history
-
-" remove suspend keystroke
-nnoremap <C-Z> <Nop>
 
 " indentation {{{1
 set autoindent                           " autoindent
@@ -166,14 +147,13 @@ noremap  <C-V> "+p
 inoremap <C-B> <Esc>"+p
 
 " better way to press escape: {{{2
-inoremap jj <Esc>
-inoremap kk <Esc>
 inoremap kj <Esc>:wa<CR>
 inoremap jk <Esc>:wa<CR>
 cnoremap kj <Esc>
 cnoremap jk <Esc>
-cnoremap jj <Esc>
-cnoremap kk <Esc>
+
+" 1-keystroke save {{{2
+nnoremap <F5> :wall<CR>
 
 " more intuitive j and k {{{2
 nnoremap j gj
@@ -199,12 +179,7 @@ nmap <Leader>_ yypgcc
 
 " quick way to do search and replace {{{2
 vnoremap <Leader>r y:%s/<C-R>0/
-
-" quick way to do operate on a selection of lines {{{2
-xnoremap <Leader>n :normal<Space>
-
-" Pull word under cursor into LHS of a substitute
-nnoremap <leader>r :%s#\<<c-r>=expand("<cword>")<cr>\>#
+nnoremap <Leader>r :%s//<Left>
 
 " repeat last search but enforce case sensitivity
 nnoremap z/ /<Up>\C<CR>
@@ -228,7 +203,7 @@ inoremap <C-W> <C-G>u<C-W>
 "   b = buffers
 "   u = unloaded buffers
 "   t = tag completion
-set complete=.,w,b,u,t
+set complete=.,b,w,u,t
 
 " easy line completion {{{2
 inoremap <C-L> <C-X><C-L>
@@ -240,6 +215,21 @@ nnoremap <silent> <Leader>to :tabonly<CR>
 nnoremap <Leader>b :ls<CR>:b
 nnoremap <silent> <C-Left> :tabmove -1<CR>
 nnoremap <silent> <C-Right> :tabmove +1<CR>
+
+" edit current file in a new tab {{{2
+nnoremap <silent> <Leader>te <C-W>T
+
+" easy to move to next/prev tab {{{2
+nnoremap t gt
+nnoremap T gT
+
+" easy open new tab {{{2
+nnoremap <silent> go :tabnew<CR>
+" do it this way so edited files can still be opened in a new tab {{{2
+nnoremap <silent> <Leader>go :tabnew<CR>:edit #<CR>
+
+" easy vertical window opening {{{2
+nnoremap <silent> gl <C-W>v
 
 " better navigating back thru files {{{2
 nnoremap <Leader><C-O> :jumps<CR>:normal <C-O><Left>
@@ -259,16 +249,8 @@ if findfile("~/Library/Application\ Support/Notational\ Data/TODO.txt") != ""
     nnoremap <silent> <Leader>et :edit ~/Library/Application\ Support/Notational\ Data/TODO.txt<CR>
 endif
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>v :tabnew ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>ez :edit $HOME<CR>
-
-" edit latest log
-command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
-
-" date command
-command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
-command! Time :normal a<C-R>=strftime("\%H:\%M:\%S")<CR>
 
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
@@ -296,21 +278,6 @@ nnoremap <Down> <C-W>-
 nnoremap <Left> <C-W><
 nnoremap <Right> <C-W>>
 
-" edit current file in a new tab {{{2
-nnoremap <silent> <Leader>te <C-W>T
-
-" easy to move to next/prev tab {{{2
-nnoremap t gt
-nnoremap T gT
-
-" easy open new tab {{{2
-nnoremap <silent> go :tabnew<CR>
-" do it this way so edited files can still be opened in a new tab {{{2
-nnoremap <silent> <Leader>go :tabnew<CR>:edit #<CR>
-
-" easy vertical window opening {{{2
-nnoremap <silent> gl <C-W>v
-
 " put current line at top of window -15 lines (NOTE: overrides 'zg', which {{{2
 " added a misspelled word to the dictionary)
 nnoremap zg zt15<C-Y>
@@ -334,7 +301,6 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-autocmd BufNewFile,BufRead *.hsm set filetype=hsm
 autocmd BufNewFile,BufRead *.mi set filetype=perl
 
 " Using BufLeave with this autocmd disallows the use of ToggleDiffOrig() {{{2
@@ -355,17 +321,29 @@ vnoremap <Leader>,/ <Esc>:call formatting#VPoundCommentOut()<CR>
 
 " formatting: {{{2
 nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
-nnoremap <Leader>sk vi{:v/\S/d<CR>:noh<CR>
-vnoremap <Leader>sk :v/\S/d<CR>:noh<CR>
+
+" CUSTOM COMMANDS {{{2
+
+" edit latest log
+command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
+autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
+autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
+
+" easy date/time insertion
+command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
+command! Time :normal a<C-R>=strftime("\%H:\%M:\%S")<CR>
 
 " quickly make a scratch buffer
 command! Scratch set buftype=nofile
 command! SC set buftype=nofile
 
+" toggle prose settings
+command! Prose call toggles#ProseToggle()
+
 " delete all but this buffer (must save first) 'Buffer Only'
 command! BOnly call util#BufOnly()
 
-" more text objects, courtesy of romainl:
+" more text objects, courtesy of romainl: {{{2
 " https://www.reddit.com/r/vim/comments/4d6q0s/weekly_vim_tips_and_tricks_thread_4/
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
     execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
@@ -374,16 +352,11 @@ for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', 
     execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
 endfor
 
-" switch from backslashes to forward slashes {{{2
-nnoremap <Leader>\/ :s/\\/\//<CR>:noh<CR>
-nnoremap <Leader>\\ :s/\//\\/<CR>:noh<CR>
-
 " Experimental: go back and forth in undo tree using CTRL-ScrollWheel
 nnoremap <C-ScrollWheelDown> g-
 nnoremap <C-ScrollWheelUp> g+
 
 " Abbreviations {{{1
-
 cnoremap %% <C-r>=expand('%:p')<CR>
 
 " mapping for :windo and :bufdo
@@ -479,8 +452,6 @@ let g:netrw_altfile   = 0
 autocmd FileType netrw unmap <buffer> v
 autocmd FileType netrw unmap <buffer> o
 autocmd FileType netrw unmap <buffer> t
-autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
-autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
 let g:netrw_bufsettings='noma nomod nowrap ro nobl rnu'
 
 " Path {{{1
@@ -496,16 +467,6 @@ nnoremap cop :set invpaste<CR>:set paste?<CR>
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
-
-" set modifiable state of buffer to match readonly state (unless overridden manually)
-function! UpdateModifiable()
-	if &readonly
-		setlocal nomodifiable
-	else
-		setlocal modifiable
-	endif
-endfunction
-
 
 function! Diff1HourAgo( timeSpec )
 	exe 'earlier' a:timeSpec
@@ -561,20 +522,11 @@ function! ExtractHumanReadableSlotTime()
     normal! kdd
 
     " call EpochToDateTime on all lines
-    %call EpochToDateTime()
+    %call util#EpochToDateTime()
 
     " remove old epoch times
     %s/ "\d\{10}"//
 endfunction
-
-function! EpochToDateTime()
-    call search('\d\{10}')
-    normal! ye
-    execute 'r!date -u -jf "\%s" ' . @0 . ' "\%a \%b \%d \%T \%Z \%Y"'
-    normal! kJ
-endfunction
-
-command! Prose call toggles#ProseToggle()
 
 function! PutTitle()
         normal! cc//-------------------------------------------------------------------------
@@ -605,18 +557,12 @@ autocmd VimEnter :call SetDebugRegisters()<CR>
 " ------ looping over a whole file:  {{{2
 " :while line('.') != line('$') | exec "normal \<C-F>" | redraw | sleep 1 | endwhile
 " comes in handy when wanting to scroll thru numerous files via a recorded macro
-"
-" ------ NotScripts password{{{2
-" ohsaycanyouseebythedawnsearlylight
 
 " ------ going back when you've pressed <Space> too many times {{{2
 " The |g<| command can be used to see the last page of previous command output.
-" This is especially useful if you accidentally typed <Space> at the hit-enter
-" prompt.
+" useful if you accidentally typed <Space> at the hit-enter prompt.
 "
 " ------ using g {{{2
-" :g/^\s*$/d          " delete all blank lines
-"
 " :g/<pattern>/z#.5                           " Display context (5 lines) for all occurrences of a pattern
 " :g/<pattern>/z#.5|echo "=========="         " Same, but with some beautification.
 " 
