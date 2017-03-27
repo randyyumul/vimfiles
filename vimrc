@@ -144,13 +144,17 @@ nnoremap Y y$
 nnoremap <C-C> "+yy
 vnoremap <C-C> "+y
 noremap  <C-V> "+p
-inoremap <C-B> <Esc>"+p
+inoremap <C-B> <Esc>"+pa
 
 " better way to press escape: {{{2
-inoremap kj <Esc>:wa<CR>
-inoremap jk <Esc>:wa<CR>
+inoremap jj <Esc>:wall<CR>
+inoremap kk <Esc>:wall<CR>
+inoremap kj <Esc>:wall<CR>
+inoremap jk <Esc>:wall<CR>
 cnoremap kj <Esc>
 cnoremap jk <Esc>
+cnoremap jj <Esc>
+cnoremap kk <Esc>
 
 " 1-keystroke save {{{2
 nnoremap <F5> :wall<CR>
@@ -193,6 +197,9 @@ nnoremap Q @q
 " paste from search register better {{{2
 inoremap <C-R>/ <C-O>:call formatting#StripSearchRegister()<CR><C-R>/
 cnoremap <C-R>/ <C-R>/<BackSpace><BackSpace><S-Left><Delete><Delete><S-Right>
+
+" paste from registers easier (note the trailing space) {{{2
+nnoremap <Leader>p :display<CR>:put 
 
 " better undo
 inoremap <C-W> <C-G>u<C-W>
@@ -506,6 +513,8 @@ function! ExtractHumanReadableSlotTime()
     " clear register 'a'
     :let @a=""
 
+    call util#SlotTimeFormatHelper()
+
     " gather cutoffTime, startTime and endTime
     normal! gg
     call search('cutoffTime')
@@ -525,7 +534,7 @@ function! ExtractHumanReadableSlotTime()
     %call util#EpochToDateTime()
 
     " remove old epoch times
-    %s/ "\d\{10}"//
+    %s/ "\d\{10}"//e
 endfunction
 
 function! PutTitle()

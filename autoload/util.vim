@@ -85,3 +85,9 @@ function! util#EpochToDateTime()
     normal! kJ
 endfunction
 
+" put unix time on same line as variable name
+function! util#SlotTimeFormatHelper()
+    %s/\(cutoffTime\)\n\("\d\{10}"\)/\1 = \2/
+    %s/\(startTime\)\n\("\d\{10}"\)/\1 = \2/
+    %s/\(endTime\)\n\("\d\{10}"\)/\1 = \2/
+endfunction
