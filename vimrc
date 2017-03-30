@@ -108,8 +108,6 @@ if has("gui")
     an 1.095 PopUp.-SEP0-5-			<Nop>
 endif
 
-" easier exiting of cmd window
-autocmd CmdwinEnter * nnoremap <buffer> q :q<CR>
 set cmdwinheight=11   " show last 10 items in cmdwin history
 
 " indentation {{{1
@@ -448,6 +446,8 @@ xmap ga :EasyAlign //<Left>
 " <C-/> to get into regular expression mode
 nmap ga <Plug>(EasyAlign)
 
+" Fugitive {{{1
+nnoremap \ :Gcd<CR>:pwd<CR>
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
 
@@ -472,6 +472,7 @@ nnoremap coS :set invsmartcase<CR>:set smartcase?<CR>
 nnoremap coP :call toggles#ToggleRecursivePath()<CR>
 nnoremap coC :call toggles#ToggleColorColumn81()<CR>
 nnoremap cop :set invpaste<CR>:set paste?<CR>
+nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
