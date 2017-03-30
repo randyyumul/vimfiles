@@ -188,8 +188,8 @@ nnoremap <Leader>r :%s//<Left>
 " repeat last search but enforce case sensitivity
 nnoremap z/ /<Up>\C<CR>
 
-" search within a selection (press Alt-/ to search w/in the visually selected area) {{{2
-vnoremap <Leader>/ <Esc>/\%V
+" repeat search but within a highlighted selection  {{{2
+vnoremap <Leader>/ <Esc>/\%V<C-R><C-R>/<CR>
 
 " better way to execute macros (assuming macro was recorded to register 'q') {{{2
 nnoremap Q @q
@@ -442,9 +442,10 @@ let g:ctrlp_cmd = 'CtrlPMRUFiles'
 
 " EasyAlign {{{1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+xmap ga :EasyAlign //<Left>
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+" <C-/> to get into regular expression mode
 nmap ga <Plug>(EasyAlign)
 
 " Netrw {{{1
