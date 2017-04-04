@@ -157,6 +157,9 @@ cnoremap kk <Esc>
 " 1-keystroke save {{{2
 nnoremap <F5> :wall<CR>
 
+" capitalize previously typed word
+inoremap <C-F> <Esc>vbgUea<Space>
+
 " more intuitive j and k {{{2
 nnoremap j gj
 nnoremap k gk
@@ -170,6 +173,9 @@ xnoremap gk k
 " swap 0 and ^ {{{2
 nnoremap 0 ^
 nnoremap ^ 0
+
+" easier way to alternate between 2 files {{{2
+nnoremap <Leader>a :b#<CR>
 
 " quick beginning and end of line in insert mode {{{2
 inoremap <C-J><C-H> <C-O>^
@@ -448,6 +454,7 @@ nmap ga <Plug>(EasyAlign)
 
 " Fugitive {{{1
 nnoremap \ :Gcd<CR>:pwd<CR>
+
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
 
@@ -461,6 +468,9 @@ autocmd FileType netrw unmap <buffer> v
 autocmd FileType netrw unmap <buffer> o
 autocmd FileType netrw unmap <buffer> t
 let g:netrw_bufsettings='noma nomod nowrap ro nobl rnu'
+
+" nValt Notes {{{1
+nnoremap <Leader>en :cd /Users/ryumul/Library/Application\ Support/Notational\ Data/<CR>:e <C-D><C-U>Ack<Space>
 
 " Path {{{1
 set path+=**
