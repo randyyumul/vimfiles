@@ -87,7 +87,7 @@ set noswapfile                           " I almost never look at these anyway
 
 runtime macros/matchit.vim           " extend % matching (on osx, better to copy plugin into .vim directory)
 
-colorscheme default
+colorscheme delek
 " set background coloring
 if findfile("~/.vimrc.local") != ""
 	source ~/.vimrc.local
@@ -433,6 +433,10 @@ inoremap { {}<ESC>i
 inoremap } <c-r>=formatting#ClosePair('}')<CR>
 inoremap [ []<ESC>i
 inoremap ] <c-r>=formatting#ClosePair(']')<CR>
+
+" Color switching {{{1
+nnoremap <F8> :call NextColor(1)<CR>
+nnoremap <S-F8> :call NextColor(-1)<CR>
 
 " Commentary {{{1
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
