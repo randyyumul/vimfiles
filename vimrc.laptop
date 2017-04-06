@@ -1,1 +1,4 @@
+" work laptop vimrc configuration
+nnoremap <silent> <Leader>et :edit ~/
+colorscheme delek
 set background=light

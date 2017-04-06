@@ -87,8 +87,7 @@ set noswapfile                           " I almost never look at these anyway
 
 runtime macros/matchit.vim           " extend % matching (on osx, better to copy plugin into .vim directory)
 
-colorscheme delek
-" set background coloring
+" set background coloring and other specific things
 if findfile("~/.vimrc.local") != ""
 	source ~/.vimrc.local
 endif
@@ -459,6 +458,10 @@ nmap ga <Plug>(EasyAlign)
 
 " Fugitive {{{1
 nnoremap \ :Gcd<CR>:pwd<CR>
+
+" search from the top level .git directory for word under the cursor
+nnoremap <F10> :Gcd<CR>:Ack <C-R><C-W><CR>
+xnoremap <F10> y:Gcd<CR>:Ack '<C-R>"'<CR>
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
