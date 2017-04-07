@@ -37,7 +37,6 @@ endif
 set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
-set mouse=a                              " allow use of mouse
 set number                               " Turn on line numbering
 if version == 800
 	set relativenumber                       " Turn on relative line numbering

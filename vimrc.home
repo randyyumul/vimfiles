@@ -1,4 +1,5 @@
 " home laptop vimrc configuration
+set mouse=a                              " allow use of mouse
 colorscheme delek
 set background=dark
 nnoremap <silent> <Leader>et :edit ~/Dropbox/Apps/TaskAgent/HomeTodo.txt<CR>

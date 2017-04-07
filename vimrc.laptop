@@ -1,4 +1,5 @@
 " work laptop vimrc configuration
+set mouse=a                              " allow use of mouse
 nnoremap <silent> <Leader>et :edit ~/
-colorscheme delek
+colorscheme desert
 set background=light

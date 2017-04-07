@@ -1,3 +1,4 @@
 " cloud vimrc configuration
 colorscheme delek
 set background=dark
+set mouse=
