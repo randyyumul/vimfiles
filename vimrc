@@ -376,6 +376,7 @@ iabbrev HACK HACK HACK HACK
 
 " print a long commented line
 iabbrev //- //-------------------------------------------------------------------------
+nnoremap + o<Esc>i-------------------------------------------------------------------------<Esc>
 command! Title call PutTitle()
 
 nnoremap <Leader>= yypVr-==
