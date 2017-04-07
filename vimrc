@@ -484,7 +484,6 @@ nnoremap <Leader>en :cd /Users/ryumul/Library/Application\ Support/Notational\ D
 set path+=**
 
 " Unimpaired {{{1
-nnoremap cob :set background=<C-R>=&background == 'dark' ? 'light' : 'dark'<CR><CR>:set background?<CR>
 nnoremap com :call toggles#ToggleMouse()<CR>
 nnoremap coS :set invsmartcase<CR>:set smartcase?<CR>
 nnoremap coP :call toggles#ToggleRecursivePath()<CR>
