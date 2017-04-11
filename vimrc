@@ -187,6 +187,9 @@ nmap <Leader>_ yypgcc
 vnoremap <Leader>r y:%s/<C-R>0/
 nnoremap <Leader>r :%s//<Left>
 
+" quick way to do case sensitive search {{{2
+nnoremap c/ /\C
+
 " repeat last search but enforce case sensitivity
 nnoremap z/ /<Up>\C<CR>
 
@@ -460,8 +463,9 @@ nmap ga <Plug>(EasyAlign)
 nnoremap \ :Gcd<CR>:pwd<CR>
 
 " search from the top level .git directory for word under the cursor
-nnoremap <F10> :Gcd<CR>:Ack <C-R><C-W><CR>
-xnoremap <F10> y:Gcd<CR>:Ack '<C-R>"'<CR>
+" (chose F7 because CMD+F7 is show variable usage w/in IntelliJ)
+nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
+xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
