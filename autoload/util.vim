@@ -47,7 +47,7 @@ function! util#ToggleDone()
     s/^\(\s*\)-/\1=/e
 
     " mark current task intermediary not done
-    s/^\(\s*\)x/\1x/e
+    s/^\(\s*\)+/\1x/e
 
     " mark current task done
     s/^\(\s*\)=/\1+/e
