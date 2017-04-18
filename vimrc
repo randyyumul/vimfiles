@@ -205,6 +205,8 @@ cnoremap <C-R>/ <C-R>/<BackSpace><BackSpace><S-Left><Delete><Delete><S-Right>
 
 " paste from registers easier (note the trailing space) {{{2
 nnoremap <Leader>p :display<CR>:put 
+" paste using Alt-P
+inoremap π <C-O>:SplitMessage reg<CR><C-O>:wincmd p<CR><C-O>:put 
 
 " better undo
 inoremap <C-W> <C-G>u<C-W>
@@ -340,7 +342,7 @@ nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
-autocmd BufNewFile,BufRead log* set filetype=help
+autocmd BufNewFile,BufRead log* set filetype=help cindent formatoptions=t textwidth=110
 
 " easy date/time insertion
 command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
@@ -380,6 +382,7 @@ iabbrev HACK HACK HACK HACK
 " print a long commented line
 iabbrev //- //-------------------------------------------------------------------------
 nnoremap + o<Esc>i-------------------------------------------------------------------------<Esc>
+inoremap <C-_> <C-O>:call PutTitle()<CR>
 command! Title call PutTitle()
 
 nnoremap <Leader>= yypVr-==
@@ -522,7 +525,17 @@ function! TabMessage(cmd)
   silent put=message
   set nomodified
 endfunction
+
+function! SplitMessage(cmd)
+  redir => message
+  silent execute a:cmd
+  redir END
+  20vnew
+  silent put=message
+  set nomodified
+endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
+command! -nargs=+ -complete=command SplitMessage call SplitMessage(<q-args>)
 
 function! JsonToReadable()
 	%s/,/,\r/
