@@ -42,6 +42,34 @@ function! util#BufOnly()
 endfunction
 
 " mark tasks done in log files
+function! util#ToggleProgress()
+    " change todo -> in-progress (intermediate)
+    s/^\(\s*\)-/\1=/e
+
+    " change in-progress -> done (intermediate)
+    s/^\(\s*\)+/\1_/e
+
+    " mark current task intermediary not done
+    " change done -> todo (intermediate)
+    s/^\(\s*\)x/\1@/e
+
+" -------------------------------------------------------------------------
+
+    " change in-progress (intermediate) -> in-progress
+    s/^\(\s*\)=/\1+/e
+
+    " change done (intermediate) -> done
+    s/^\(\s*\)_/\1x/e
+
+    " change todo (intermediate) -> todo
+    s/^\(\s*\)@/\1-/e
+
+    " allow search for the next TODO item
+    let @/ = '^\s*\zs-'
+    set hlsearch
+endfunction
+
+" mark tasks done in log files
 function! util#ToggleDone()
     " mark current task intermediary done
     s/^\(\s*\)-/\1=/e

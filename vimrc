@@ -342,6 +342,7 @@ nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
+autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>X :set nohlsearch<CR>:call util#ToggleProgress()<CR>
 autocmd BufNewFile,BufRead log* set filetype=help cindent formatoptions=t textwidth=110
 
 " easy date/time insertion
@@ -574,7 +575,7 @@ function! ExtractHumanReadableSlotTime()
 endfunction
 
 function! PutTitle()
-        normal! cc-------------------------------------------------------------------------
+        normal! V99<c$-------------------------------------------------------------------------
         normal! 10|
         startreplace
 endfunction
