@@ -190,6 +190,13 @@ nnoremap <Leader>r :%s//<Left>
 " quick way to do case sensitive search {{{2
 nnoremap c/ /\C
 
+" quick way to add a new search to current search {{{2
+nnoremap <Leader>* /<C-R><C-W>\\|<C-R>/<CR>
+
+" navigate through occurrences of previous search w/in current file
+nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
+vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
+
 " repeat last search but enforce case sensitivity
 nnoremap z/ /<Up>\C<CR>
 
@@ -302,11 +309,7 @@ nnoremap z- 1z=
 " nice way of opening/closing quickfix window {{{2
 nnoremap <silent> cv :call toggles#QuickFixToggle()<CR>
 
-" navigate through occurrences of previous search w/in current file
-nnoremap g/ :g/<C-R><C-W>/#<CR>:
-vnoremap g/ y:g/<C-R>0/#<CR>:
-
-" lookup word under cusror in vim help
+" lookup word under cursor in vim help
 autocmd FileType vim nnoremap <buffer> K yiw:help <C-R>"<CR>
 
 " Return to last edit position when opening files (You want this!) '\" is the cursor position when last exiting the current buffer {{{2
