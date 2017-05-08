@@ -534,10 +534,14 @@ command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 command! -nargs=+ -complete=command SplitMessage call SplitMessage(<q-args>)
 
 function! JsonToReadable()
+    %s/\\"/\"/
 	%s/,/,\r/
 	%s/{/{\r
 	%s/}/}\r
 	%s/^"/	"/
+    %s/\\n//
+    %s/\\t/	/
+    %s/\\"/"/
 	noh
 endfunction
 
