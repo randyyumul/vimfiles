@@ -183,7 +183,8 @@ nnoremap <Leader>r :%s//<Left>
 nnoremap c/ /\C
 
 " quick way to add a new search to current search {{{2
-nnoremap <Leader>* /<C-R><C-W>\\|<C-R>/<CR>
+nnoremap \| /<C-R><C-W>\\|<C-R>/<CR>
+xnoremap \| y/<C-R>0\\|<C-R>/<CR>
 
 " navigate through occurrences of previous search w/in current file
 nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
@@ -273,8 +274,8 @@ nnoremap <Leader>Y% :let @+=expand('%:p')<CR>:let @"=expand('%:p')<CR>
 nnoremap v <C-q>
 
 " visually search for highlighted text
-xnoremap * y/<C-R>"<CR>
-xnoremap # y?<C-R>"<CR>
+xnoremap * y/<C-R>0<CR>
+xnoremap # y?<C-R>0<CR>
 
 " easily select previous changed or yanked text {{{2
 nnoremap gV '[V']
@@ -310,7 +311,9 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-autocmd BufNewFile,BufRead *.mi set filetype=perl
+autocmd BufNewFile,BufRead *.mi,*.pm set filetype=perl
+autocmd BufNewFile,BufRead *.mi,*.pm nnoremap <buffer> [m :let tmpsearch=@/<CR>?^sub<CR>:let @/=tmpsearch<CR>
+autocmd BufNewFile,BufRead *.mi,*.pm nnoremap <buffer> ]m :let tmpsearch=@/<CR>/^sub<CR>:let @/=tmpsearch<CR>
 
 " Using BufLeave with this autocmd disallows the use of ToggleDiffOrig() {{{2
 if version == 800
@@ -334,8 +337,8 @@ nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
 " edit latest log
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
-autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
-autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>X :set nohlsearch<CR>:call util#ToggleProgress()<CR>
+autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
+autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>X :set nohlsearch<CR>:call util#ToggleProgress()<CR>
 autocmd BufNewFile,BufRead log* set filetype=help cindent formatoptions=t textwidth=110
 
 " easy date/time insertion
