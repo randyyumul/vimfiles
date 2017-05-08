@@ -39,7 +39,8 @@ set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
 set number                               " Turn on line numbering
 if version == 800
-	set relativenumber                       " Turn on relative line numbering
+	set relativenumber                   " Turn on relative line numbering
+	set number                           " Turn on absolute line numbering
 endif
 set shortmess=imt                        " clean up the 'Press ENTER ...' prompts
 set splitright                           " new window is put right of the current one
@@ -65,8 +66,8 @@ set diffopt+=vertical                    " start 'diffthis' vertically by defaul
 if has("gui")
 	set guioptions-=T                    " remove toolbar
 	set guioptions-=m                    " remove drop down menu
-	" set guioptions-=b                    " allow horizontal scrollbar
-	set guioptions-=L                    " left scrollbar when split
+	set guioptions+=b                    " allow horizontal scrollbar
+	set guioptions+=l                    " left scrollbar always 'L' is for when split
 	set guioptions-=g                    " grey menu items that aren't active
 	" set guioptions-=e                    " gui tabs
 endif
@@ -83,6 +84,7 @@ set statusline+=,%l                      " line number
 set statusline+=/%p%%                    " percentage through file
 
 set noswapfile                           " I almost never look at these anyway
+set showcmd                              " show how much is selected in visual mode
 
 runtime macros/matchit.vim           " extend % matching (on osx, better to copy plugin into .vim directory)
 
@@ -157,16 +159,6 @@ nnoremap <F5> :wall<CR>
 
 " capitalize previously typed word
 inoremap <C-F> <Esc>vbgUea<Space>
-
-" more intuitive j and k {{{2
-nnoremap j gj
-nnoremap k gk
-xnoremap j gj
-xnoremap k gk
-nnoremap gj j
-nnoremap gk k
-xnoremap gj j
-xnoremap gk k
 
 " swap 0 and ^ {{{2
 nnoremap 0 ^
@@ -325,9 +317,7 @@ if version == 800
 	augroup RMYGroup
 		autocmd!
 		autocmd RMYGroup InsertEnter * set norelativenumber
-		autocmd RMYGroup InsertEnter * set number
 		autocmd RMYGroup InsertLeave * set relativenumber
-		autocmd RMYGroup InsertLeave * set nonumber
 		autocmd RMYGroup WinLeave * set norelativenumber
 		autocmd RMYGroup WinEnter * set relativenumber
 	augroup END
@@ -387,7 +377,6 @@ iabbrev HACK HACK HACK HACK
 iabbrev //- //-------------------------------------------------------------------------
 nnoremap + o<Esc>i-------------------------------------------------------------------------<Esc>
 inoremap <C-_> <C-O>:call PutTitle()<CR>
-command! Title call PutTitle()
 
 nnoremap <Leader>= yypVr-==
 
