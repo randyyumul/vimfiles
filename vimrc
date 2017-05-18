@@ -115,7 +115,7 @@ set autoindent                           " autoindent
 set shiftwidth=4                         " tab size
 set tabstop=4                            " tab size
 set expandtab                            " use spaces instead of tabs :-(
-set listchars=tab:>.,trail:.,extends:\
+set listchars=eol:\$,tab:>.,trail:.,extends:\
 
 " searching {{{2
 set gdefault                             " default /g in substs
@@ -339,7 +339,7 @@ command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
 autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>X :set nohlsearch<CR>:call util#ToggleProgress()<CR>
-autocmd BufNewFile,BufRead log* set filetype=help cindent formatoptions=t textwidth=110
+autocmd BufNewFile,BufRead log* set filetype=help nocindent formatoptions=t textwidth=110
 
 " easy date/time insertion
 command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
@@ -378,7 +378,8 @@ iabbrev HACK HACK HACK HACK
 
 " print a long commented line
 iabbrev //- //-------------------------------------------------------------------------
-nnoremap + o<Esc>i-------------------------------------------------------------------------<Esc>
+nnoremap + o<Esc>i-------------------------------------------------------------------------<Esc>
+inoremap <C-]> <Esc>o-------------------------------------------------------------------------<Esc>
 inoremap <C-_> <C-O>:call PutTitle()<CR>
 
 nnoremap <Leader>= yypVr-==
