@@ -25,3 +25,12 @@
 [submodule "pack/bundles/start/ack.vim"]
 	path = pack/bundles/start/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
+[submodule "pack/bundles/start/ultisnips"]
+	path = pack/bundles/start/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "pack/bundles/start/vim-snippets"]
+	path = pack/bundles/start/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "pack/bundles/start/supertab"]
+	path = pack/bundles/start/supertab
+	url = https://github.com/ervandew/supertab.git

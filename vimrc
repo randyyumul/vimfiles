@@ -168,8 +168,8 @@ nnoremap ^ 0
 nnoremap <Leader>a :b#<CR>
 
 " quick beginning and end of line in insert mode {{{2
-inoremap <C-J><C-H> <C-O>^
-inoremap <C-J><C-L> <End>
+inoremap <C-G><C-H> <C-O>^
+inoremap <C-G><C-L> <End>
 
 " copy entire line and paste before the current line and comment {{{2
 nnoremap _ yyp
@@ -201,7 +201,6 @@ nnoremap Q @q
 
 " paste from search register better {{{2
 inoremap <C-R>/ <C-O>:call formatting#StripSearchRegister()<CR><C-R>/
-cnoremap <C-R>/ <C-R>/<BackSpace><BackSpace><S-Left><Delete><Delete><S-Right>
 
 " paste from registers easier (note the trailing space) {{{2
 nnoremap <Leader>p :display<CR>:put 
