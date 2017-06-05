@@ -259,9 +259,7 @@ nnoremap <Leader>q :bd<CR>
 nnoremap <Leader>w :wincmd c<CR>
 
 " 'e'dit 'v'imrc, and 's'ource 'v'imrc, respectively) {{{2
-if findfile("~/Library/Application\ Support/Notational\ Data/TODO.txt") != ""
-    nnoremap <silent> <Leader>et :edit ~/Library/Application\ Support/Notational\ Data/TODO.txt<CR>
-endif
+nnoremap <silent> <Leader>et :!open -a Firefox 'https://flytext.in'<CR>
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>ez :edit $HOME<CR>
