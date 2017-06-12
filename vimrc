@@ -118,7 +118,6 @@ set expandtab                            " use spaces instead of tabs :-(
 set listchars=eol:\$,tab:>.,trail:.,extends:\
 
 " searching {{{2
-set gdefault                             " default /g in substs
 set hlsearch                             " highlight matched text
 set incsearch                            " incremental search
 set ignorecase                           " by default ignore case
@@ -176,8 +175,8 @@ nnoremap _ yyp
 nmap <Leader>_ yypgcc
 
 " quick way to do search and replace {{{2
-vnoremap <Leader>r y:%s/<C-R>0/
-nnoremap <Leader>r :%s//<Left>
+vnoremap <Leader>r y:%s/<C-R>0//g<Left><Left>
+nnoremap <Leader>r :%s//g<Left><Left>
 
 " quick way to do case sensitive search {{{2
 nnoremap c/ /\C
