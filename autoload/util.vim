@@ -71,16 +71,23 @@ endfunction
 
 " mark tasks done in log files
 function! util#ToggleDone()
-    " mark current task intermediary done
+    " change todo -> done (intermediate)
     s/^\(\s*\)-/\1=/e
 
-    " mark current task intermediary not done
+    " change in-progress -> done (intermediate)
+    s/^\(\s*\)+/\1_/e
+
+    " change done -> todo (intermediate)
     s/^\(\s*\)x/\1+/e
 
-    " mark current task done
+" -------------------------------------------------------------------------
+    " change todo -> done
     s/^\(\s*\)=/\1x/e
 
-    " mark current task not done
+    " change in-progress -> done
+    s/^\(\s*\)_/\1x/e
+
+    " change done -> todo
     s/^\(\s*\)+/\1-/e
 
     " allow search for the next TODO item
