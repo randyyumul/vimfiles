@@ -1,6 +1,5 @@
 " home laptop vimrc configuration
 set mouse=a                              " allow use of mouse
-colorscheme delek
-set background=dark
+colorscheme default
 nnoremap <silent> <Leader>et :edit ~/Dropbox/Apps/TaskAgent/HomeTodo.txt<CR>
 autocmd BufNewFile,BufRead *Todo.txt,GroceryList.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
