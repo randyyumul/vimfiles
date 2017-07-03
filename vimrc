@@ -257,7 +257,6 @@ nnoremap <Leader>q :bd<CR>
 nnoremap <Leader>w :wincmd c<CR>
 
 " 'e'dit 'v'imrc, and 's'ource 'v'imrc, respectively) {{{2
-nnoremap <silent> <Leader>et :!open -a Firefox 'https://flytext.in'<CR>
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>ez :edit $HOME<CR>
@@ -424,6 +423,9 @@ if executable('ag')
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
 endif
+
+nnoremap <F10> :Ack <C-R><C-W> %<CR>
+nnoremap <S-F10> :Ack  %<Left><Left>
 
 " ClosePair {{{1
 inoremap ( ()<ESC>i

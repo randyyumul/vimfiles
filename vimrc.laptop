@@ -1,6 +1,7 @@
 " work laptop vimrc configuration
 set mouse=a                              " allow use of mouse
 nnoremap <silent> <Leader>et :edit ~/
+nnoremap <silent> <Leader>et :!open -a Firefox 'https://flytext.in'<CR><CR>
 colorscheme desert
 set background=light
 if has("gui")
