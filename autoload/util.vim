@@ -65,7 +65,7 @@ function! util#ToggleProgress()
     s/^\(\s*\)@/\1-/e
 
     " allow search for the next TODO item
-    let @/ = '^\s*\zs-'
+    let @/ = '^\s*\zs- '
     set hlsearch
 endfunction
 
@@ -91,7 +91,7 @@ function! util#ToggleDone()
     s/^\(\s*\)+/\1-/e
 
     " allow search for the next TODO item
-    let @/ = '^\s\+\zs-'
+    let @/ = '^\s\+\zs- '
     set hlsearch
 endfunction
 
