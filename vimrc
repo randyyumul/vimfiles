@@ -481,7 +481,7 @@ autocmd FileType netrw unmap <buffer> t
 let g:netrw_bufsettings='noma nomod nowrap ro nobl rnu'
 
 " nValt Notes {{{1
-nnoremap <Leader>en :cd /Users/ryumul/Library/Application\ Support/Notational\ Data/<CR>:e <C-D><C-U>Ack<Space>
+nnoremap <Leader>en :edit /Users/ryumul/Library/Application\ Support/Notational\ Data/<CR>
 
 " Path {{{1
 set path+=**
