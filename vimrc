@@ -426,6 +426,7 @@ endif
 
 nnoremap <F10> :Ack <C-R><C-W> %<CR>
 nnoremap <S-F10> :Ack  %<Left><Left>
+let g:ack_apply_qmappings = 0
 
 " ClosePair {{{1
 inoremap ( ()<ESC>i
@@ -465,6 +466,7 @@ nnoremap \ :Gcd<CR>:pwd<CR>
 " (chose F7 because CMD+F7 is show variable usage w/in IntelliJ)
 nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
 xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
+nnoremap <S-F7> :Gcd<CR>:Ack 
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
