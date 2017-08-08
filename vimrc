@@ -318,6 +318,8 @@ if version == 800
 		autocmd RMYGroup InsertLeave * set relativenumber
 		autocmd RMYGroup WinLeave * set norelativenumber
 		autocmd RMYGroup WinEnter * set relativenumber
+		autocmd RMYGroup WinLeave * set nocursorline
+		autocmd RMYGroup WinEnter * set cursorline
 	augroup END
 endif
 
