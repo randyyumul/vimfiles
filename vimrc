@@ -382,12 +382,9 @@ cabbrev wdt windo diffthis
 iabbrev HACK HACK HACK HACK
 
 " print a long commented line
-iabbrev //- //-------------------------------------------------------------------------
-nnoremap + o<Esc>i-------------------------------------------------------------------------<Esc>
-nnoremap <Leader>+ o<Esc>:call PutTitle()<CR>
-inoremap <C-]> <Esc>o-------------------------------------------------------------------------<Esc>
-inoremap <C-_> <C-O>:call PutTitle()<CR>
-
+nnoremap <Leader>-- o-------------------------------------------------------------------------<Esc>
+nnoremap <Leader>-t o<Esc>:call PutTitle()<CR>
+command! Title call PutTitle()
 nnoremap <Leader>= yypVr-==
 
 " misspellings
