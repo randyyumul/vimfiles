@@ -309,8 +309,8 @@ autocmd BufReadPost *
 
 autocmd BufNewFile,BufRead *.pm set filetype=perl
 autocmd BufNewFile,BufRead *.mi set filetype=mason
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> [m ?<%\(def\\|method\) <CR>
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> ]m /<%\(def\\|method\) <CR>
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\)/#<CR>:normal! ``<CR>:
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>] :g/<%\(def\\|method\)/#<CR>:
 autocmd BufNewFile,BufRead *.pm nnoremap <buffer> [m ?^sub<CR>
