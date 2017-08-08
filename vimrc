@@ -307,9 +307,16 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-autocmd BufNewFile,BufRead *.mi,*.pm set filetype=perl
-autocmd BufNewFile,BufRead *.mi,*.pm nnoremap <buffer> [m :let tmpsearch=@/<CR>?^sub<CR>:let @/=tmpsearch<CR>
-autocmd BufNewFile,BufRead *.mi,*.pm nnoremap <buffer> ]m :let tmpsearch=@/<CR>/^sub<CR>:let @/=tmpsearch<CR>
+autocmd BufNewFile,BufRead *.pm set filetype=perl
+autocmd BufNewFile,BufRead *.mi set filetype=mason
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> [m ?<%\(def\\|method\) <CR>
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> ]m /<%\(def\\|method\) <CR>
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\)/#<CR>:normal! ``<CR>:
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>] :g/<%\(def\\|method\)/#<CR>:
+autocmd BufNewFile,BufRead *.pm nnoremap <buffer> [m ?^sub<CR>
+autocmd BufNewFile,BufRead *.pm nnoremap <buffer> ]m /^sub<CR>
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) <C-R>0<CR>:let @/=tmpsearch<CR>
+autocmd BufNewFile,BufRead *.mi,*.pm set iskeyword-=:
 
 " Using BufLeave with this autocmd disallows the use of ToggleDiffOrig() {{{2
 if version == 800
