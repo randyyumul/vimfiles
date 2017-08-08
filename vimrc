@@ -187,6 +187,7 @@ xnoremap \| y/<C-R>0\\|<C-R>/<CR>
 
 " navigate through occurrences of previous search w/in current file
 nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
+nnoremap <Space>g/ :g//#<Left><Left>
 vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
 
 " repeat last search but enforce case sensitivity
