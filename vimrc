@@ -38,6 +38,7 @@ set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
 set number                               " Turn on line numbering
+set cursorline                           " highlight current line
 if version == 800
 	set relativenumber                   " Turn on relative line numbering
 	set number                           " Turn on absolute line numbering
@@ -309,12 +310,13 @@ autocmd BufReadPost *
 
 autocmd BufNewFile,BufRead *.pm set filetype=perl
 autocmd BufNewFile,BufRead *.mi set filetype=mason
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
+autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
+autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
+autocmd BufNewFile,BufRead *.mi noremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\)/#<CR>:normal! ``<CR>:
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>] :g/<%\(def\\|method\)/#<CR>:
-autocmd BufNewFile,BufRead *.pm nnoremap <buffer> [m ?^sub<CR>
-autocmd BufNewFile,BufRead *.pm nnoremap <buffer> ]m /^sub<CR>
+autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
+autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) <C-R>0<CR>:let @/=tmpsearch<CR>
 autocmd BufNewFile,BufRead *.mi,*.pm set iskeyword-=:
 
