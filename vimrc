@@ -313,8 +313,7 @@ autocmd BufNewFile,BufRead *.mi set filetype=mason
 autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
 autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
 autocmd BufNewFile,BufRead *.mi noremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\)/#<CR>:normal! ``<CR>:
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>] :g/<%\(def\\|method\)/#<CR>:
+autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
 autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
 autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) <C-R>0<CR>:let @/=tmpsearch<CR>
