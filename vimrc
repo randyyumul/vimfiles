@@ -344,6 +344,7 @@ nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
 " edit latest log
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
+autocmd BufNewFile,BufRead log* command! CommitLog !git add . && git ci -m "update" && git pull --rebase && git push
 autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
 autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>X :set nohlsearch<CR>:call util#ToggleProgress()<CR>
 autocmd BufNewFile,BufRead log* set filetype=help nocindent formatoptions=t textwidth=110
