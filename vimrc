@@ -446,8 +446,8 @@ inoremap [ []<ESC>i
 inoremap ] <c-r>=formatting#ClosePair(']')<CR>
 
 " Color switching {{{1
-nnoremap <F8> :call NextColor(1)<CR>
-nnoremap <S-F8> :call NextColor(-1)<CR>
+nnoremap <F3> :call NextColor(1)<CR>
+nnoremap <F2> :call NextColor(-1)<CR>
 
 " Commentary {{{1
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
@@ -460,6 +460,8 @@ vmap gh gc
 " CtrlP {{{1
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
 
+nnoremap <C-_> :Gcd<CR>:CtrlP<CR>
+
 " EasyAlign {{{1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga :EasyAlign //<Left>
@@ -469,13 +471,11 @@ xmap ga :EasyAlign //<Left>
 nmap ga <Plug>(EasyAlign)
 
 " Fugitive {{{1
-nnoremap \ :Gcd<CR>:pwd<CR>
-
 " search from the top level .git directory for word under the cursor
 " (chose F7 because CMD+F7 is show variable usage w/in IntelliJ)
 nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
 xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
-nnoremap <S-F7> :Gcd<CR>:Ack 
+nnoremap <F8> :Gcd<CR>:Ack 
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
@@ -493,6 +493,7 @@ let g:netrw_bufsettings='noma nomod nowrap ro nobl rnu'
 
 " nValt Notes {{{1
 nnoremap <Leader>en :edit /Users/ryumul/Library/Application\ Support/Notational\ Data/<CR>
+command! Notes :edit /Users/ryumul/Library/Application\ Support/Notational\ Data/
 
 " Path {{{1
 set path+=**
