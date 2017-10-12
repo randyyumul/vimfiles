@@ -1,4 +1,4 @@
 " cloud vimrc configuration
-colorscheme murphy
+colorscheme default
 set background=dark
 set mouse=

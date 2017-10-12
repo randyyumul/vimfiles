@@ -2,7 +2,7 @@
 set mouse=a                              " allow use of mouse
 nnoremap <silent> <Leader>et :edit ~/
 nnoremap <silent> <Leader>et :!open -a Firefox 'https://flytext.in'<CR><CR>
-colorscheme desert
+colorscheme default
 set background=light
 if has("gui")
     colorscheme macvim
