@@ -64,6 +64,7 @@ set wildcharm=<C-Z>
 set nowrap                               " default to display no line wrapping
 set fillchars=""                         " get rid of the characters in window separators
 set diffopt+=vertical                    " start 'diffthis' vertically by default
+set showtabline=2
 if has("gui")
 	set guioptions-=T                    " remove toolbar
 	set guioptions-=m                    " remove drop down menu
