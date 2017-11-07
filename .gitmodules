@@ -37,3 +37,6 @@
 [submodule "pack/bundles/start/vim-markdown"]
 	path = pack/bundles/start/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
+[submodule "pack/bundles/start/vimwiki"]
+	path = pack/bundles/start/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
