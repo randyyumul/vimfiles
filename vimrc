@@ -363,6 +363,9 @@ command! Prose call toggles#ProseToggle()
 " delete all but this buffer (must save first) 'Buffer Only'
 command! BOnly call util#BufOnly()
 
+" easily switch to corresponding test file in java
+autocmd BufNewFile,BufRead *.java command! Test Gcd | execute "find " . expand('%:t:r') . "Test.java"
+
 " more text objects, courtesy of romainl: {{{2
 " https://www.reddit.com/r/vim/comments/4d6q0s/weekly_vim_tips_and_tricks_thread_4/
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
@@ -490,6 +493,7 @@ let g:netrw_altfile   = 0
 autocmd FileType netrw unmap <buffer> v
 autocmd FileType netrw unmap <buffer> o
 autocmd FileType netrw unmap <buffer> t
+autocmd FileType netrw unmap <buffer> T
 let g:netrw_bufsettings='noma nomod nowrap ro nobl rnu'
 
 " nValt Notes {{{1
