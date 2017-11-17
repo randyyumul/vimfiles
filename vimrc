@@ -116,7 +116,6 @@ set cmdwinheight=11   " show last 10 items in cmdwin history
 set autoindent                           " autoindent
 set shiftwidth=4                         " tab size
 set tabstop=4                            " tab size
-set expandtab                            " use spaces instead of tabs :-(
 set listchars=eol:\$,tab:>.,trail:.,extends:\
 
 " searching {{{2
