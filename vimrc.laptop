@@ -9,4 +9,4 @@ if has("gui")
 endif
 
 " special commands for at work
-command Code :execute "!open https://code.amazon.com/search?term=path:" . expand('%:t')
+command! Code :execute "!open https://code.amazon.com/search?term=path:" . expand('%:t')
