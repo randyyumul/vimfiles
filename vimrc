@@ -318,6 +318,7 @@ autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
 autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
 autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) <C-R>0<CR>:let @/=tmpsearch<CR>
 autocmd BufNewFile,BufRead *.mi,*.pm set iskeyword-=:
+autocmd BufNewFile,BufRead Config set expandtab
 
 " Using BufLeave with this autocmd disallows the use of ToggleDiffOrig() {{{2
 if version == 800
@@ -510,6 +511,10 @@ nnoremap coC :call toggles#ToggleColorColumn81()<CR>
 nnoremap cop :set invpaste<CR>:set paste?<CR>
 nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
 
+" vimwiki {{{1
+let g:vimwiki_conceallevel = 0
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
+
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
 
@@ -549,17 +554,7 @@ endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 command! -nargs=+ -complete=command SplitMessage call SplitMessage(<q-args>)
 
-function! JsonToReadable()
-    %s/\\"/\"/
-	%s/,/,\r/
-	%s/{/{\r
-	%s/}/}\r
-	%s/^"/	"/
-    %s/\\n//
-    %s/\\t/	/
-    %s/\\"/"/
-	noh
-endfunction
+command! -range Json <Line1>,<Line2>!python -m json.tool
 
 function! ExtractHumanReadableSlotTime()
     " clear register 'a'
