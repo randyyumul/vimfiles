@@ -448,6 +448,8 @@ inoremap { {}<ESC>i
 inoremap } <c-r>=formatting#ClosePair('}')<CR>
 inoremap [ []<ESC>i
 inoremap ] <c-r>=formatting#ClosePair(']')<CR>
+inoremap [[ [[
+inoremap {{{ {{{
 
 " Color switching {{{1
 nnoremap <F3> :call NextColor(1)<CR>
