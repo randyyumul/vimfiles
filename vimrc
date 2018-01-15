@@ -343,6 +343,7 @@ nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
 
 " edit latest log
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
+command! JOurnal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 autocmd BufNewFile,BufRead log* command! CommitLog !git add . && git ci -m "update" && git pull --rebase && git push
 autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
@@ -516,6 +517,7 @@ nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
 " vimwiki {{{1
 let g:vimwiki_conceallevel = 0
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
+let g:vimwiki_folding='syntax'
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
