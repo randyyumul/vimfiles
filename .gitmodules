@@ -40,3 +40,6 @@
 [submodule "pack/bundles/start/vimwiki"]
 	path = pack/bundles/start/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
+[submodule "pack/bundles/start/vim-javascript"]
+	path = pack/bundles/start/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git

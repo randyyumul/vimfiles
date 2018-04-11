@@ -10,6 +10,17 @@ function! util#Vinegar()
     let @"=tmp
 endfunction
 
+function! util#VinegarDrawer()
+    let tmp=@"
+    let @"=@%
+    let saved_netrw_liststyle = g:netrw_liststyle
+    let g:netrw_liststyle = 3
+    topleft 30vne .
+    let g:netrw_liststyle = saved_netrw_liststyle
+    call search(@")
+    let @"=tmp
+endfunction
+
 " eliminate all but the current buffer
 function! util#BufOnly()
     let buffer = bufnr('%')
@@ -66,7 +77,7 @@ function! util#ToggleProgress()
 
     " allow search for the next TODO item
     let @/ = '^\s*\zs- '
-    set hlsearch
+    set nohlsearch
 endfunction
 
 " mark tasks done in log files
@@ -92,7 +103,7 @@ function! util#ToggleDone()
 
     " allow search for the next TODO item
     let @/ = '^\s\+\zs- '
-    set hlsearch
+    set nohlsearch
 endfunction
 
 " log the date and open the previous day's log file

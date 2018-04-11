@@ -1,12 +1,12 @@
 " work laptop vimrc configuration
 set mouse=a                              " allow use of mouse
-nnoremap <silent> <Leader>et :edit ~/
-nnoremap <silent> <Leader>et :!open -a Firefox 'https://flytext.in'<CR><CR>
 colorscheme default
 set background=light
 if has("gui")
     colorscheme macvim
 endif
 
-" special commands for at work
+" == special commands for at work ==
+
+" search for current file in code.amazon.com
 command! Code :execute "!open https://code.amazon.com/search?term=path:" . expand('%:t')

@@ -21,6 +21,8 @@ function! toggles#ToggleFoldMethod()
 	if &foldmethod == "manual"
 		set foldmethod=indent
 	elseif &foldmethod == "indent"
+		set foldmethod=syntax
+	elseif &foldmethod == "syntax"
 		set foldmethod=manual
 	endif
 	set foldmethod?

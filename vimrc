@@ -10,7 +10,7 @@ let mapleader = "\<Space>"
 " map <CR> to : but not for quickfix or command windows!!!
 " thanks to /u/meribold in this post: https://www.reddit.com/r/vim/comments/4m678o/best_way_to_remap_cr_in_normal_mode/
 nnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
-xnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
+vnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 
 nnoremap <Leader>h :noh<CR>
 xnoremap <Leader>h :<C-U>noh<CR><ESC>gv
@@ -46,6 +46,7 @@ endif
 set shortmess=imt                        " clean up the 'Press ENTER ...' prompts
 set splitright                           " new window is put right of the current one
 set title                                " set terminal title
+set titlestring=%f%m%y                   " filename, modified, filetype
 set undofile                             " automatically save undo history to an undo file when writing a buffer to a file
 if isdirectory($HOME . '/temp/vimundo') == 0
     silent !mkdir -p ~/temp/vimundo > /dev/null 2>&1
@@ -64,7 +65,7 @@ set wildcharm=<C-Z>
 set nowrap                               " default to display no line wrapping
 set fillchars=""                         " get rid of the characters in window separators
 set diffopt+=vertical                    " start 'diffthis' vertically by default
-set showtabline=2
+set showtabline=1
 if has("gui")
 	set guioptions-=T                    " remove toolbar
 	set guioptions-=m                    " remove drop down menu
@@ -164,8 +165,20 @@ inoremap <C-F> <Esc>vbgUea<Space>
 nnoremap 0 ^
 nnoremap ^ 0
 
+" navigate wrapped lines easier
+nnoremap gj j
+nnoremap gk k
+nnoremap j gj
+nnoremap k gk
+
+xnoremap gj j
+xnoremap gk k
+xnoremap j gj
+xnoremap k gk
+
 " easier way to alternate between 2 files {{{2
 nnoremap <Leader>a :b#<CR>
+nnoremap <BS> :b#<CR>
 
 " quick beginning and end of line in insert mode {{{2
 inoremap <C-G><C-H> <C-O>^
@@ -227,8 +240,6 @@ nnoremap <silent> <Leader>tc :tabclose<CR>
 nnoremap <silent> <Leader>td :windo bd<CR>
 nnoremap <silent> <Leader>to :tabonly<CR>
 nnoremap <Leader>b :ls<CR>:b
-nnoremap <silent> <C-Left> :tabmove -1<CR>
-nnoremap <silent> <C-Right> :tabmove +1<CR>
 
 " edit current file in a new tab {{{2
 nnoremap <silent> <Leader>te <C-W>T
@@ -251,12 +262,12 @@ nnoremap <Leader><C-O> :jumps<CR>:normal <C-O><Left>
 " navigating back thru changes {{{2
 nnoremap <Leader><C-G> :changes<CR>:normal g;<Left><Left>
 
-" REALLY want to close a buffer {{{2
+" close a buffer {{{2
 nnoremap <Leader>Q :bd!<CR>
-
-" better way to do bufdelete or 'bd' and window closing {{{2
 nnoremap <Leader>q :bd<CR>
-nnoremap <Leader>w :wincmd c<CR>
+
+" window closing {{{2
+nnoremap <Leader>c :wincmd c<CR>
 
 " 'e'dit 'v'imrc, and 's'ource 'v'imrc, respectively) {{{2
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
@@ -273,6 +284,8 @@ nnoremap v <C-q>
 " visually search for highlighted text
 xnoremap * y/<C-R>0<CR>
 xnoremap # y?<C-R>0<CR>
+
+nnoremap <Space>* yi"/<C-R>0<CR>
 
 " easily select previous changed or yanked text {{{2
 nnoremap gV '[V']
@@ -308,17 +321,23 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-autocmd BufNewFile,BufRead *.pm set filetype=perl
-autocmd BufNewFile,BufRead *.mi set filetype=mason
-autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
-autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
-autocmd BufNewFile,BufRead *.mi noremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
-autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
-autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
-autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) <C-R>0<CR>:let @/=tmpsearch<CR>
-autocmd BufNewFile,BufRead *.mi,*.pm set iskeyword-=:
-autocmd BufNewFile,BufRead Config set expandtab
+" these should probably go in vimfiles/ftplugin/*.vim but am leaving them here for now 
+autocmd BufNewFile,BufRead *.ion set filetype=javascript expandtab noautochdir
+augroup PerlMason
+	autocmd!
+	autocmd BufNewFile,BufRead *.pm set filetype=perl
+	autocmd BufNewFile,BufRead *.mi set filetype=mason expandtab
+	autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
+	autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
+	autocmd BufNewFile,BufRead *.mi noremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
+	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
+	autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
+	autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
+	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) .*<C-R>0<CR>:let @/=tmpsearch<CR>
+	autocmd BufNewFile,BufRead *.mi,*.pm set iskeyword-=:
+	autocmd BufNewFile,BufRead Config set expandtab
+	autocmd BufNewFile,BufRead build.xml set expandtab
+augroup END
 
 " Using BufLeave with this autocmd disallows the use of ToggleDiffOrig() {{{2
 if version == 800
@@ -345,10 +364,7 @@ nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
 command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 command! JOurnal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
-autocmd BufNewFile,BufRead log* command! CommitLog !git add . && git ci -m "update" && git pull --rebase && git push
-autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>x :set nohlsearch<CR>:call util#ToggleDone()<CR>
-autocmd BufNewFile,BufRead log*,*TODO.txt nnoremap <buffer> <Leader>X :set nohlsearch<CR>:call util#ToggleProgress()<CR>
-autocmd BufNewFile,BufRead log* set filetype=help nocindent formatoptions=t textwidth=110
+autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax
 
 " easy date/time insertion
 command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
@@ -483,9 +499,11 @@ nmap ga <Plug>(EasyAlign)
 nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
 xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
 nnoremap <F8> :Gcd<CR>:Ack 
+nnoremap <F9> :let fname=@%<CR>:Gcd<CR>:Ack <C-R>%<CR>
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
+nnoremap <Space>1 :call util#VinegarDrawer()<CR>
 
 let g:netrw_keepdir   = 0
 let g:netrw_hide      = 1
@@ -515,9 +533,11 @@ nnoremap cop :set invpaste<CR>:set paste?<CR>
 nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
 
 " vimwiki {{{1
-let g:vimwiki_conceallevel = 0
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 let g:vimwiki_folding='syntax'
+nmap g- <Plug>VimwikiRemoveHeaderLevel
+nmap g= <Plug>VimwikiAddHeaderLevel
+vmap <C-]> <Plug>VimwikiNormalizeLinkVisualCR
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
@@ -593,6 +613,19 @@ function! PutTitle()
         normal! 10|
         startreplace
 endfunction
+"When editing a file, make screen display the name of the file you are editing
+"Enabled by default. Either unlet variable or set to 0 in your .vimrc to disable.
+let g:EnvImprovement_SetTitleEnabled = 1
+function! SetTitle()
+	if exists("g:EnvImprovement_SetTitleEnabled") && g:EnvImprovement_SetTitleEnabled && $TERM =~ "^screen"
+		let l:title = 'vi: ' . expand('%:t')
+
+		if (l:title != 'vi: __Tag_List__')
+			let l:truncTitle = strpart(l:title, 0, 15)
+			silent exe '!echo -e -n "\033k' . l:truncTitle . '\033\\"'
+		endif
+	endif
+endfunction
 
 " easy logging {{{1
 function! SetDebugRegisters()
@@ -600,6 +633,10 @@ function! SetDebugRegisters()
     let @e='FLLog::FLLogError( "" );'
 endfunction
 autocmd VimEnter :call SetDebugRegisters()<CR>
+
+" trying this for ftl templates:
+autocmd BufNewFile,BufRead *.nfg set suffixesadd+=.ftl filetype=json
+autocmd BufNewFile,BufRead *.ftl set filetype=xml suffixesadd+=.ftl
 
 " misc notes {{{1
 "
