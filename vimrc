@@ -499,7 +499,7 @@ nmap ga <Plug>(EasyAlign)
 nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
 xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
 nnoremap <F8> :Gcd<CR>:Ack 
-nnoremap <F9> :let fname=@%<CR>:Gcd<CR>:Ack <C-R>%<CR>
+nnoremap <F9> :let fname=@%<CR>:Gcd<CR>:execute 'Ack ' fname<CR>
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
