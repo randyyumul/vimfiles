@@ -538,6 +538,15 @@ let g:vimwiki_folding='syntax'
 nmap g- <Plug>VimwikiRemoveHeaderLevel
 nmap g= <Plug>VimwikiAddHeaderLevel
 vmap <C-]> <Plug>VimwikiNormalizeLinkVisualCR
+augroup MyVimWiki
+	" open new lines normally if using 'O'
+	autocmd BufNewFile,BufRead *.wiki nunmap <buffer> O
+	autocmd BufNewFile,BufRead log* nunmap <buffer> O
+
+	" easy removal of [ ] tasks
+	autocmd BufNewFile,BufRead log* let @o="0ll4x``"
+augroup END
+
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
