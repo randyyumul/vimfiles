@@ -155,8 +155,8 @@ cnoremap jk <Esc>
 cnoremap jj <Esc>
 cnoremap kk <Esc>
 
-" 1-keystroke save {{{2
-nnoremap <F5> :wall<CR>
+" quick save {{{2
+nnoremap <Space>s :w<CR>
 
 " capitalize previously typed word
 inoremap <C-F> <Esc>vbgUea<Space>
@@ -269,10 +269,9 @@ nnoremap <Leader>q :bd<CR>
 " window closing {{{2
 nnoremap <Leader>c :wincmd c<CR>
 
-" 'e'dit 'v'imrc, and 's'ource 'v'imrc, respectively) {{{2
+" 'e'dit 'v'imrc, and source 'v'imrc, respectively) {{{2
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>ez :edit $HOME<CR>
+nnoremap <silent> <Leader>v :source ~/dotfiles/vimfiles/vimrc<CR>
 
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
@@ -325,7 +324,7 @@ autocmd BufReadPost *
 autocmd BufNewFile,BufRead *.ion set filetype=javascript expandtab noautochdir
 augroup PerlMason
 	autocmd!
-	autocmd BufNewFile,BufRead *.pm set filetype=perl
+	autocmd BufNewFile,BufRead *.pm set filetype=perl expandtab
 	autocmd BufNewFile,BufRead *.mi set filetype=mason expandtab
 	autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
 	autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
@@ -352,19 +351,7 @@ if version == 800
 	augroup END
 endif
 
-" comment out large blocks of text
-vnoremap <Leader>,/ <Esc>:call formatting#VPoundCommentOut()<CR>
-
-" formatting: {{{2
-nnoremap <Leader>ss :call formatting#StripTrailingWhitespaces()<CR>
-
 " CUSTOM COMMANDS {{{2
-
-" edit latest log
-command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
-command! JOurnal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
-autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
-autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax
 
 " easy date/time insertion
 command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
@@ -533,20 +520,19 @@ nnoremap cop :set invpaste<CR>:set paste?<CR>
 nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
 
 " vimwiki {{{1
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1, 'ext': '.wiki'}]
 let g:vimwiki_folding='syntax'
-nmap g- <Plug>VimwikiRemoveHeaderLevel
-nmap g= <Plug>VimwikiAddHeaderLevel
-vmap <C-]> <Plug>VimwikiNormalizeLinkVisualCR
 augroup MyVimWiki
-	" open new lines normally if using 'O'
-	autocmd BufNewFile,BufRead *.wiki nunmap <buffer> O
-	autocmd BufNewFile,BufRead log* nunmap <buffer> O
+	autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
+	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax
 
 	" easy removal of [ ] tasks
 	autocmd BufNewFile,BufRead log* let @o="0ll4x``"
 augroup END
 
+" edit latest log
+command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
+command! JOurnal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
