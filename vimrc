@@ -527,7 +527,7 @@ augroup MyVimWiki
 	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax
 
 	" easy removal of [ ] tasks
-	autocmd BufNewFile,BufRead log* let @o="0ll4x``"
+	autocmd BufNewFile,BufRead log* let @o="0ll4x"
 augroup END
 
 " edit latest log
