@@ -6,6 +6,8 @@ function! util#Vinegar()
     let tmp=@"
     let @"=@%
     edit .
+    let g:netrw_liststyle = 0
+    let g:netrw_browse_split = 0
     call search(@")
     let @"=tmp
 endfunction
@@ -13,10 +15,9 @@ endfunction
 function! util#VinegarDrawer()
     let tmp=@"
     let @"=@%
-    let saved_netrw_liststyle = g:netrw_liststyle
     let g:netrw_liststyle = 3
-    topleft 30vne .
-    let g:netrw_liststyle = saved_netrw_liststyle
+    let g:netrw_browse_split = 4
+    topleft 50vne .
     call search(@")
     let @"=tmp
 endfunction

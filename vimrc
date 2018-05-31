@@ -156,7 +156,7 @@ cnoremap jj <Esc>
 cnoremap kk <Esc>
 
 " quick save {{{2
-nnoremap <Space>s :w<CR>
+nnoremap S :wa<CR>
 
 " capitalize previously typed word
 inoremap <C-F> <Esc>vbgUea<Space>
@@ -253,9 +253,6 @@ nnoremap <silent> go :tabnew<CR>
 " do it this way so edited files can still be opened in a new tab {{{2
 nnoremap <silent> <Leader>go :tabnew<CR>:edit #<CR>
 
-" easy vertical window opening {{{2
-nnoremap <silent> gl <C-W>v
-
 " better navigating back thru files {{{2
 nnoremap <Leader><C-O> :jumps<CR>:normal <C-O><Left>
 
@@ -271,7 +268,7 @@ nnoremap <Leader>c :wincmd c<CR>
 
 " 'e'dit 'v'imrc, and source 'v'imrc, respectively) {{{2
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>v :source ~/dotfiles/vimfiles/vimrc<CR>
+nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 3<CR>:echomsg ""<CR>
 
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
@@ -356,6 +353,8 @@ endif
 " easy date/time insertion
 command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
 command! Time :normal a<C-R>=strftime("\%H:\%M:\%S")<CR>
+inoremap <C-R><C-D> <C-O>:Date<CR>
+inoremap <C-R><C-T> <C-O>:Time<CR>
 
 " quickly make a scratch buffer
 command! Scratch set buftype=nofile
