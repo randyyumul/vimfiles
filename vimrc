@@ -38,8 +38,7 @@ set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
 set linebreak                            " break at a word boundary
 set number                               " Turn on line numbering
-set cursorline                           " highlight current line
-if version == 800
+if version >= 800
 	set relativenumber                   " Turn on relative line numbering
 	set number                           " Turn on absolute line numbering
 endif
@@ -52,6 +51,7 @@ if isdirectory($HOME . '/temp/vimundo') == 0
     silent !mkdir -p ~/temp/vimundo > /dev/null 2>&1
 endif
 set undodir=~/temp/vimundo
+set undolevels=200
 set ttimeoutlen=0                        " time in milliseconds that is waited for a key code or mapped key
 set wildmenu                             " enhanced file/command tab completion
 set wildmode=list:longest,full           " set file/command completion mode
@@ -157,9 +157,6 @@ cnoremap kk <Esc>
 
 " quick save {{{2
 nnoremap S :wa<CR>
-
-" capitalize previously typed word
-inoremap <C-F> <Esc>vbgUea<Space>
 
 " swap 0 and ^ {{{2
 nnoremap 0 ^
@@ -343,8 +340,6 @@ if version == 800
 		autocmd RMYGroup InsertLeave * set relativenumber
 		autocmd RMYGroup WinLeave * set norelativenumber
 		autocmd RMYGroup WinEnter * set relativenumber
-		autocmd RMYGroup WinLeave * set nocursorline
-		autocmd RMYGroup WinEnter * set cursorline
 	augroup END
 endif
 
@@ -486,6 +481,7 @@ nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
 xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
 nnoremap <F8> :Gcd<CR>:Ack 
 nnoremap <F9> :let fname=@%<CR>:Gcd<CR>:execute 'Ack ' fname<CR>
+cabbrev gdi Gdiff
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
@@ -521,6 +517,7 @@ nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
 " vimwiki {{{1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1, 'ext': '.wiki'}]
 let g:vimwiki_folding='syntax'
+nnoremap gl* :VimwikiChangeSymbolTo \*<CR>
 augroup MyVimWiki
 	autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax
