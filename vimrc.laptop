@@ -9,4 +9,44 @@ endif
 " == special commands for at work ==
 
 " search for current file in code.amazon.com
-command! Code :execute "!open https://code.amazon.com/search?term=path:" . expand('%:t')
+command! Code :call OpenAmazonCode(1)
+command! CodeFile :call OpenAmazonCode(0)
+
+function! OpenAmazonCode( useLineNumber )
+    " setup
+    let l:debug = 0
+    let savedDir = expand("%:p:h")
+
+    " get toplevel package dir
+    let gitDir = finddir(".git", ".;~/WS")      " upward search
+    let packageDir = fnamemodify(gitDir, ":h")  " remove '.git' from last part of path (e.g. ~/WS/FXOrderDetailsMason/src/FreshExperienceOrderDetailsMason)
+    let packageName = fnamemodify(packageDir, ":t") " e.g. FreshExperienceOrderDetailsMason
+
+    " get path to current file, relative to packageDir
+    execute 'cd ' . packageDir
+    let relativePathFile = expand('%')              " e.g. perlModules/lib/PI/OrderDetails/PaymentUtils.pm
+
+    " get line and hash to be used as URL params
+    let lineNum = line('.')
+    let gitHash = system("git log --format='%H' HEAD~1..HEAD")[:-2]  " [:-2] to strip a NL and Null character at end of system call output
+
+    let openURL = ""
+    " form URL
+    if a:useLineNumber == 1
+        let openURL = "https://code.amazon.com/packages/" . packageName .  "/blobs/" . gitHash . "/--/" . relativePathFile . "\\#L" . lineNum
+    else
+        let openURL = "https://code.amazon.com/packages/" . packageName .  "/blobs/mainline/--/" . relativePathFile
+    endif
+
+    if l:debug == 1
+        echo "savedDir:         " . savedDir
+        echo "packageDir:       " . packageDir
+        echo "relativePathFile: " . relativePathFile
+        echo "packageName:      " . packageName
+        echo "gitHash:          " . gitHash
+        echo "openURL:          " . openURL
+    else
+        execute "!open " openURL
+        execute 'cd ' . savedDir
+    endif
+endfunction

@@ -113,6 +113,9 @@ function util#LogDate()
     vsplit
     wincmd h
     normal [fgg
+    normal jyG
+    wincmd l
+    normal p
 endfunction
 
 " set modifiable state of buffer to match readonly state (unless overridden manually)

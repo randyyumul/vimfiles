@@ -265,7 +265,7 @@ nnoremap <Leader>c :wincmd c<CR>
 
 " 'e'dit 'v'imrc, and source 'v'imrc, respectively) {{{2
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 3<CR>:echomsg ""<CR>
+nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 1<CR>:echomsg ""<CR>
 
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
@@ -348,8 +348,8 @@ endif
 " easy date/time insertion
 command! Date :normal a<C-R>=strftime("\%Y-\%m-\%d")<CR>
 command! Time :normal a<C-R>=strftime("\%H:\%M:\%S")<CR>
-inoremap <C-R><C-D> <C-O>:Date<CR>
-inoremap <C-R><C-T> <C-O>:Time<CR>
+inoremap <C-R><C-D> <C-O>:Date<CR><Right>
+inoremap <C-R><C-T> <C-O>:Time<CR><Right>
 
 " quickly make a scratch buffer
 command! Scratch set buftype=nofile
@@ -408,7 +408,8 @@ cabbrev redire redir END
 " folding settings {{{1
 set foldmethod=indent
 set foldlevel=99
-nnoremap cof :call toggles#ToggleFoldMethod()<CR>
+nnoremap cof :echomsg "Use yof"<CR>
+nnoremap yof :call toggles#ToggleFoldMethod()<CR>
 
 " difforig {{{1
 if !exists(":DiffOrig")
@@ -483,6 +484,9 @@ nnoremap <F8> :Gcd<CR>:Ack
 nnoremap <F9> :let fname=@%<CR>:Gcd<CR>:execute 'Ack ' fname<CR>
 cabbrev gdi Gdiff
 
+" gutentags {{{1
+let g:gutentags_cache_dir='~/temp/gutentags'
+
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
 nnoremap <Space>1 :call util#VinegarDrawer()<CR>
@@ -520,7 +524,7 @@ let g:vimwiki_folding='syntax'
 nnoremap gl* :VimwikiChangeSymbolTo \*<CR>
 augroup MyVimWiki
 	autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
-	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax
+	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
 
 	" easy removal of [ ] tasks
 	autocmd BufNewFile,BufRead log* let @o="0ll4x"
@@ -616,6 +620,17 @@ function! SetTitle()
 			silent exe '!echo -e -n "\033k' . l:truncTitle . '\033\\"'
 		endif
 	endif
+endfunction
+
+function! PrettyPrintLogs()
+    %s/{/{/g
+    %s/}/}/g
+    %s/\[/\[/g
+    %s/\]/\]/g
+    %s/,/,/g
+    normal gg=G
+    %s/}\_.\s*,/},/g
+    %s/]\_.\s*,/],/g
 endfunction
 
 " easy logging {{{1

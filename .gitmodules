@@ -25,12 +25,6 @@
 [submodule "pack/bundles/start/ack.vim"]
 	path = pack/bundles/start/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "pack/bundles/start/ultisnips"]
-	path = pack/bundles/start/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
-[submodule "pack/bundles/start/vim-snippets"]
-	path = pack/bundles/start/vim-snippets
-	url = https://github.com/honza/vim-snippets.git
 [submodule "pack/bundles/start/vim-markdown"]
 	path = pack/bundles/start/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
@@ -40,3 +34,6 @@
 [submodule "pack/bundles/start/vim-javascript"]
 	path = pack/bundles/start/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule "pack/bundles/start/diffconflicts"]
+	path = pack/bundles/start/diffconflicts
+	url = https://github.com/whiteinge/diffconflicts.git
