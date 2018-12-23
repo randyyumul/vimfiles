@@ -8,6 +8,11 @@ function! toggles#ToggleColorColumn81()
 	endif
 endfunction
 
+function! toggles#ToggleConcealLevel()
+    let &conceallevel = (&conceallevel + 1) % 3
+    set conceallevel?
+endfunction
+
 function! toggles#ToggleMouse()
 	if &mouse == ""
 		set mouse=a
