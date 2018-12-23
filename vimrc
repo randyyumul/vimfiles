@@ -443,6 +443,8 @@ xmap ga :EasyAlign //<Left>
 nmap ga <Plug>(EasyAlign)
 
 " Fugitive {{{1
+nnoremap <F5> :Gstatus<CR>
+
 " search from the top level .git directory for word under the cursor
 " (chose F7 because CMD+F7 is show variable usage w/in IntelliJ)
 nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
