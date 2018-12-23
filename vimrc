@@ -145,6 +145,9 @@ vnoremap <C-C> "+y
 noremap  <C-V> "+p
 inoremap <C-B> <Esc>"+pa
 
+" replace text without killing the yank register
+xnoremap <Leader>p "_dP
+
 " better way to press escape: {{{2
 inoremap jj <Esc>:wall<CR>
 inoremap kk <Esc>:wall<CR>
@@ -157,10 +160,6 @@ cnoremap kk <Esc>
 
 " quick save {{{2
 nnoremap S :wa<CR>
-
-" swap 0 and ^ {{{2
-nnoremap 0 ^
-nnoremap ^ 0
 
 " navigate wrapped lines easier
 nnoremap gj j
@@ -177,21 +176,6 @@ xnoremap k gk
 nnoremap <Leader>a :b#<CR>
 nnoremap <BS> :b#<CR>
 
-" quick beginning and end of line in insert mode {{{2
-inoremap <C-G><C-H> <C-O>^
-inoremap <C-G><C-L> <End>
-
-" copy entire line and paste before the current line and comment {{{2
-nnoremap _ yyp
-nmap <Leader>_ yypgcc
-
-" quick way to do search and replace {{{2
-vnoremap <Leader>r y:%s/<C-R>0//g<Left><Left>
-nnoremap <Leader>r :%s//g<Left><Left>
-
-" quick way to do case sensitive search {{{2
-nnoremap c/ /\C
-
 " quick way to add a new search to current search {{{2
 nnoremap \| /<C-R><C-W>\\|<C-R>/<CR>
 xnoremap \| y/<C-R>0\\|<C-R>/<CR>
@@ -200,9 +184,6 @@ xnoremap \| y/<C-R>0\\|<C-R>/<CR>
 nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
 nnoremap <Space>g/ :g//#<Left><Left>
 vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
-
-" repeat last search but enforce case sensitivity
-nnoremap z/ /<Up>\C<CR>
 
 " repeat search but within a highlighted selection  {{{2
 vnoremap <Leader>/ <Esc>/\%V<C-R><C-R>/<CR>
@@ -232,10 +213,7 @@ set complete=.,b,w,u,t
 " easy line completion {{{2
 inoremap <C-L> <C-X><C-L>
 
-" better navigating through tabs {{{2
-nnoremap <silent> <Leader>tc :tabclose<CR>
-nnoremap <silent> <Leader>td :windo bd<CR>
-nnoremap <silent> <Leader>to :tabonly<CR>
+" better navigating through buffers {{{2
 nnoremap <Leader>b :ls<CR>:b
 
 " edit current file in a new tab {{{2
@@ -260,9 +238,6 @@ nnoremap <Leader><C-G> :changes<CR>:normal g;<Left><Left>
 nnoremap <Leader>Q :bd!<CR>
 nnoremap <Leader>q :bd<CR>
 
-" window closing {{{2
-nnoremap <Leader>c :wincmd c<CR>
-
 " 'e'dit 'v'imrc, and source 'v'imrc, respectively) {{{2
 nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
 nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 1<CR>:echomsg ""<CR>
@@ -277,8 +252,6 @@ nnoremap v <C-q>
 " visually search for highlighted text
 xnoremap * y/<C-R>0<CR>
 xnoremap # y?<C-R>0<CR>
-
-nnoremap <Space>* yi"/<C-R>0<CR>
 
 " easily select previous changed or yanked text {{{2
 nnoremap gV '[V']
@@ -380,15 +353,9 @@ nnoremap <C-ScrollWheelUp> g+
 " Abbreviations {{{1
 cnoremap %% <C-r>=expand('%:p')<CR>
 
-" mapping for :windo and :bufdo
-cabbrev wdt windo diffthis
-
-iabbrev HACK HACK HACK HACK
-
 " print a long commented line
 nnoremap <Leader>-- o-------------------------------------------------------------------------<Esc>
 nnoremap <Leader>-t o<Esc>:call PutTitle()<CR>
-command! Title call PutTitle()
 nnoremap <Leader>= yypVr-==
 
 " misspellings
@@ -413,8 +380,7 @@ nnoremap yof :call toggles#ToggleFoldMethod()<CR>
 
 " difforig {{{1
 if !exists(":DiffOrig")
-  command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-          \ | wincmd p | diffthis
+  command! DiffOrig leftabove vert new | set bt=nofile | r # | 0d | windo diffthis
 endif
 
 " 'd'iff 'o'rig, and use 'd'iff key 'm'apping
@@ -436,6 +402,7 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
 endif
 
+"search current file for current word
 nnoremap <F10> :Ack <C-R><C-W> %<CR>
 nnoremap <S-F10> :Ack  %<Left><Left>
 let g:ack_apply_qmappings = 0
@@ -482,7 +449,6 @@ nnoremap <F7> :Gcd<CR>:Ack <C-R><C-W><CR>
 xnoremap <F7> y:Gcd<CR>:Ack '<C-R>"'<CR>
 nnoremap <F8> :Gcd<CR>:Ack 
 nnoremap <F9> :let fname=@%<CR>:Gcd<CR>:execute 'Ack ' fname<CR>
-cabbrev gdi Gdiff
 
 " gutentags {{{1
 let g:gutentags_cache_dir='~/temp/gutentags'
@@ -501,27 +467,22 @@ autocmd FileType netrw unmap <buffer> v
 autocmd FileType netrw unmap <buffer> o
 autocmd FileType netrw unmap <buffer> t
 autocmd FileType netrw unmap <buffer> T
-let g:netrw_bufsettings='noma nomod nowrap ro nobl rnu'
-
-" nValt Notes {{{1
-nnoremap <Leader>en :edit /Users/ryumul/Library/Application\ Support/Notational\ Data/<CR>
-command! Notes :edit /Users/ryumul/Library/Application\ Support/Notational\ Data/
+let g:netrw_bufsettings='nomodifiable nomodified nowrap readonly nobuflisted relativenumber'
 
 " Path {{{1
 set path+=**
 
 " Unimpaired {{{1
-nnoremap com :call toggles#ToggleMouse()<CR>
-nnoremap coS :set invsmartcase<CR>:set smartcase?<CR>
-nnoremap coP :call toggles#ToggleRecursivePath()<CR>
-nnoremap coC :call toggles#ToggleColorColumn81()<CR>
-nnoremap cop :set invpaste<CR>:set paste?<CR>
-nnoremap coa :set invautochdir<CR>:set autochdir?<CR>
+nnoremap yom :call toggles#ToggleMouse()<CR>
+nnoremap yoC :call toggles#ToggleColorColumn81()<CR>
+nnoremap yoa :set invautochdir<CR>:set autochdir?<CR>
 
 " vimwiki {{{1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1, 'ext': '.wiki'}]
 let g:vimwiki_folding='syntax'
 nnoremap gl* :VimwikiChangeSymbolTo \*<CR>
+nnoremap you :call toggles#ToggleConcealLevel()<CR>
+
 augroup MyVimWiki
 	autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
@@ -585,13 +546,20 @@ function! ExtractHumanReadableSlotTime()
     normal! gg
     call search('cutoffTime')
     normal! "ayy
+
+    normal! gg
     call search('startTime')
     normal! "Ayy
+
     normal! gg
     call search('endTime')
+    normal! "Ayy
+
+    normal! gg
+    call search('slotModCutoff')
+    normal! "Ayy
 
     " replace entire file with those times
-    normal! "Ayy
     normal! ggdG
     normal! "ap
     normal! kdd
@@ -603,11 +571,6 @@ function! ExtractHumanReadableSlotTime()
     %s/ "\d\{10}"//e
 endfunction
 
-function! PutTitle()
-        normal! V99<c$-------------------------------------------------------------------------
-        normal! 10|
-        startreplace
-endfunction
 "When editing a file, make screen display the name of the file you are editing
 "Enabled by default. Either unlet variable or set to 0 in your .vimrc to disable.
 let g:EnvImprovement_SetTitleEnabled = 1
