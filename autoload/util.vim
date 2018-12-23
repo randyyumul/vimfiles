@@ -108,7 +108,7 @@ function! util#ToggleDone()
 endfunction
 
 " log the date and open the previous day's log file
-function util#LogDate()
+function! util#LogDate()
     0r!date
     vsplit
     wincmd h
@@ -116,6 +116,7 @@ function util#LogDate()
     normal jyG
     wincmd l
     normal p
+    call util#BufOnly()
 endfunction
 
 " set modifiable state of buffer to match readonly state (unless overridden manually)
@@ -140,4 +141,5 @@ function! util#SlotTimeFormatHelper()
     %s/\(cutoffTime\)\n\("\d\{10}"\)/\1 = \2/e
     %s/\(startTime\)\n\("\d\{10}"\)/\1 = \2/e
     %s/\(endTime\)\n\("\d\{10}"\)/\1 = \2/e
+    %s/\(slotModCutoff\)\n\("\d\{10}"\)/\1 = \2/e
 endfunction
