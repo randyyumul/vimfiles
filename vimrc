@@ -196,8 +196,6 @@ inoremap <C-R>/ <C-O>:call formatting#StripSearchRegister()<CR><C-R>/
 
 " paste from registers easier (note the trailing space) {{{2
 nnoremap <Leader>p :display<CR>:put 
-" paste using Alt-P
-inoremap π <C-O>:SplitMessage reg<CR><C-O>:wincmd p<CR><C-O>:put 
 
 " better undo
 inoremap <C-W> <C-G>u<C-W>
@@ -490,7 +488,7 @@ augroup MyVimWiki
 	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
 
 	" easy removal of [ ] tasks
-	autocmd BufNewFile,BufRead log* let @o="0ll4x"
+	autocmd BufNewFile,BufRead log* let @o="0f[4x"
 augroup END
 
 " edit latest log
