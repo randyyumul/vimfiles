@@ -142,7 +142,7 @@ nnoremap Y y$
 " windows-esque mappings {{{2
 nnoremap <C-C> "+yy
 vnoremap <C-C> "+y
-noremap  <C-V> "+p
+inoremap  <C-V> "+p
 inoremap <C-B> <Esc>"+pa
 
 " replace text without killing the yank register
@@ -243,9 +243,6 @@ nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>:echomsg "sour
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
 nnoremap <Leader>Y% :let @+=expand('%:p')<CR>:let @"=expand('%:p')<CR>
-
-" almost always want block select over regular visual. To get regular visual mode, just press 'v' again. {{{2
-nnoremap v <C-q>
 
 " visually search for highlighted text
 xnoremap * y/<C-R>0<CR>
