@@ -119,6 +119,21 @@ function! util#LogDate()
     call util#BufOnly()
 endfunction
 
+" log the date and open the previous day's diary file
+function! util#LogDiaryDate()
+    0r!date "+\%Y-\%m-\%d"
+    normal ggI= 
+    normal ggA =
+    vsplit
+    wincmd h
+    normal [fgg
+    normal jyG
+    wincmd l
+    normal p
+    call util#BufOnly()
+    normal gg$h
+endfunction
+
 " set modifiable state of buffer to match readonly state (unless overridden manually)
 function! util#UpdateModifiable()
 	if &readonly

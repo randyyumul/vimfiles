@@ -88,6 +88,7 @@ set statusline+=/%p%%                    " percentage through file
 
 set noswapfile                           " I almost never look at these anyway
 set showcmd                              " show how much is selected in visual mode
+set virtualedit+=block                   " allow virtual editing in visual mode
 
 runtime macros/matchit.vim           " extend % matching (on osx, better to copy plugin into .vim directory)
 
@@ -131,6 +132,18 @@ filetype on                              " enable filetype detection
 filetype indent on                       " enable filetype-specific indenting
 filetype plugin on                       " enable filetype-specific plugins
 
+" change cursor shape depending on mode
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+if exists('$TMUX')
+	let &t_SI = "\ePtmux;\e\e[5 q\e\\"
+	let &t_SR = "\ePtmux;\e\e[4 q\e\\"
+	let &t_EI = "\ePtmux;\e\e[2 q\e\\"
+endif
+
+
 " MODE MAPPINGS {{{1
 
 " TIP: way to check if mapping is already taken:
@@ -142,7 +155,6 @@ nnoremap Y y$
 " windows-esque mappings {{{2
 nnoremap <C-C> "+yy
 vnoremap <C-C> "+y
-inoremap  <C-V> "+p
 inoremap <C-B> <Esc>"+pa
 
 " replace text without killing the yank register
@@ -477,20 +489,23 @@ nnoremap yoa :set invautochdir<CR>:set autochdir?<CR>
 " vimwiki {{{1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1, 'ext': '.wiki'}]
 let g:vimwiki_folding='syntax'
+let g:vimwiki_hl_cb_checked = 1
 nnoremap gl* :VimwikiChangeSymbolTo \*<CR>
-nnoremap you :call toggles#ToggleConcealLevel()<CR>
+nnoremap yoz :call toggles#ToggleConcealLevel()<CR>
 
 augroup MyVimWiki
 	autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
 	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
+	autocmd BufNewFile,BufRead *.wiki nnoremap <buffer> <Leader>D :call util#LogDiaryDate()<CR>
+	autocmd BufNewFile,BufRead *.wiki set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
 
 	" easy removal of [ ] tasks
 	autocmd BufNewFile,BufRead log* let @o="0f[4x"
 augroup END
 
 " edit latest log
-command! Journal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
-command! JOurnal :execute "edit ~/journal/log" . strftime("%Y-%m-%d") . ".txt"
+command! Journal :execute "edit ~/vimwiki/diary/" . strftime("%Y-%m-%d") . ".wiki"
+command! JOurnal :execute "edit ~/vimwiki/diary/" . strftime("%Y-%m-%d") . ".wiki"
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
