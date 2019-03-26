@@ -30,9 +30,9 @@ autocmd BufReadPost * call util#UpdateModifiable()
 set backspace=eol,start,indent           " make backspace better
 set belloff=all                          " disallow annoying bell sound
 set cmdheight=2                          " number of lines to use for the command-line
-if findfile("~/dotfiles/spell/en.utf-8.add") != ""
-    set dictionary+=~/dotfiles/spell/en.utf-8.add
-    set spellfile=~/dotfiles/spell/en.utf-8.add
+if findfile("~/config/spell/en.utf-8.add") != ""
+    set dictionary+=~/config/spell/en.utf-8.add
+    set spellfile=~/config/spell/en.utf-8.add
 endif
 set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
@@ -249,8 +249,8 @@ nnoremap <Leader>Q :bd!<CR>
 nnoremap <Leader>q :bd<CR>
 
 " 'e'dit 'v'imrc, and source 'v'imrc, respectively) {{{2
-nnoremap <silent> <Leader>ev :edit ~/dotfiles/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>sv :source ~/dotfiles/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 1<CR>:echomsg ""<CR>
+nnoremap <silent> <Leader>ev :edit ~/config/vimfiles/vimrc<CR>
+nnoremap <silent> <Leader>sv :source ~/config/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 1<CR>:echomsg ""<CR>
 
 " yank filename to clipboard {{{2
 nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
@@ -472,11 +472,32 @@ let g:netrw_list_hide = '.*\.swp$,.*\.meta$,.*\.suo$'
 let g:netrw_banner    = 1
 let g:netrw_altfile   = 0
 " remove Netrw's annoying mappings
-autocmd FileType netrw unmap <buffer> v
-autocmd FileType netrw unmap <buffer> o
-autocmd FileType netrw unmap <buffer> t
-autocmd FileType netrw unmap <buffer> T
+autocmd FileType netrw SmartUnmap('v')
+autocmd FileType netrw SmartUnmap('o')
+autocmd FileType netrw SmartUnmap('t')
+autocmd FileType netrw SmartUnmap('T')
+
 let g:netrw_bufsettings='nomodifiable nomodified nowrap readonly nobuflisted relativenumber'
+
+" Plug (vim-plug) {{{1
+" https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
+Plug 'mileszs/ack.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'whiteinge/diffconflicts'
+Plug 'https://github.com/felixhummel/setcolors.vim.git'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-commentary'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'pangloss/vim-javascript'
+Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vimwiki/vimwiki'
+call plug#end()
 
 " Path {{{1
 set path+=**
@@ -494,13 +515,11 @@ nnoremap gl* :VimwikiChangeSymbolTo \*<CR>
 nnoremap yoz :call toggles#ToggleConcealLevel()<CR>
 
 augroup MyVimWiki
-	autocmd BufNewFile,BufRead log* nnoremap <buffer> <Leader>D :call util#LogDate()<CR>
-	autocmd BufNewFile,BufRead log* set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
 	autocmd BufNewFile,BufRead *.wiki nnoremap <buffer> <Leader>D :call util#LogDiaryDate()<CR>
 	autocmd BufNewFile,BufRead *.wiki set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
 
 	" easy removal of [ ] tasks
-	autocmd BufNewFile,BufRead log* let @o="0f[4x"
+	autocmd BufNewFile,BufRead *.wiki let @o="0f[4x"
 augroup END
 
 " edit latest log
@@ -509,6 +528,12 @@ command! JOurnal :execute "edit ~/vimwiki/diary/" . strftime("%Y-%m-%d") . ".wik
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
+
+function! SmartUnmap( char )
+    if mapcheck( char, "N" ) != ""
+        unmap <buffer> char
+    endif
+endfunction
 
 function! Diff1HourAgo( timeSpec )
 	exe 'earlier' a:timeSpec
