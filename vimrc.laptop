@@ -1,10 +1,6 @@
 " work laptop vimrc configuration
 set mouse=a                              " allow use of mouse
-colorscheme default
 set background=light
-if has("gui")
-    colorscheme macvim
-endif
 
 " == special commands for at work ==
 

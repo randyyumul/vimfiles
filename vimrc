@@ -1,5 +1,5 @@
 " ------------------------------------------------
-" Randy Yumul's amazon vimrc
+" Randy Yumul's vimrc
 " ------------------------------------------------
 
 filetype off
@@ -508,23 +508,11 @@ nnoremap yoC :call toggles#ToggleColorColumn81()<CR>
 nnoremap yoa :set invautochdir<CR>:set autochdir?<CR>
 
 " vimwiki {{{1
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1, 'ext': '.wiki'}]
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'auto_toc': 1, 'ext': '.md'}]
 let g:vimwiki_folding='syntax'
 let g:vimwiki_hl_cb_checked = 1
 nnoremap gl* :VimwikiChangeSymbolTo \*<CR>
 nnoremap yoz :call toggles#ToggleConcealLevel()<CR>
-
-augroup MyVimWiki
-	autocmd BufNewFile,BufRead *.wiki nnoremap <buffer> <Leader>D :call util#LogDiaryDate()<CR>
-	autocmd BufNewFile,BufRead *.wiki set filetype=vimwiki nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
-
-	" easy removal of [ ] tasks
-	autocmd BufNewFile,BufRead *.wiki let @o="0f[4x"
-augroup END
-
-" edit latest log
-command! Journal :execute "edit ~/vimwiki/diary/" . strftime("%Y-%m-%d") . ".wiki"
-command! JOurnal :execute "edit ~/vimwiki/diary/" . strftime("%Y-%m-%d") . ".wiki"
 
 " -- FUNCTIONS -- {{{1
 " this section is for functions not specifically associated with a plugin
