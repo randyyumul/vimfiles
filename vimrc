@@ -396,17 +396,15 @@ nnoremap <Leader>dh :call Diff1HourAgo( '1h' )<CR>
 
 " Ag {{{1
 " The Silver Searcher
-if executable('ag')
+if executable('rg')
+    " Use rg over grep
+    let g:ackprg = "rg --vimgrep --no-heading"
+    cnoreabbrev ag Ack
+elseif executable('ag')
     " Use ag over grep
     let g:ackprg = "ag --vimgrep"
     cnoreabbrev ag Ack
     set shellpipe=&>
-
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
 endif
 
 "search current file for current word
@@ -436,10 +434,10 @@ nmap ghg gcc
 nmap ghh gcc
 vmap gh gc
 
-" CtrlP {{{1
-let g:ctrlp_cmd = 'CtrlPMRUFiles'
-
-nnoremap <C-_> :Gcd<CR>:CtrlP<CR>
+" fzf {{{1
+nnoremap <C-_> :Gcd<CR>:Files<CR>
+nnoremap <C-P> :History<CR>
+nnoremap <C-N> :Files<CR>
 
 " EasyAlign {{{1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -483,9 +481,7 @@ let g:netrw_bufsettings='nomodifiable nomodified nowrap readonly nobuflisted rel
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'mileszs/ack.vim'
-Plug 'kien/ctrlp.vim'
 Plug 'whiteinge/diffconflicts'
-Plug 'https://github.com/felixhummel/setcolors.vim.git'
 Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/vim-easy-align'
@@ -498,6 +494,11 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vimwiki/vimwiki'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'junegunn/fzf.vim'
+" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Both options are optional. You don't have to install fzf in ~/.fzf
+  " and you don't have to run the install script if you use fzf only in Vim.
 call plug#end()
 
 " Path {{{1

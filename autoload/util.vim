@@ -122,8 +122,7 @@ endfunction
 " log the date and open the previous day's diary file
 function! util#LogDiaryDate()
     0r!date "+\%Y-\%m-\%d"
-    normal ggI= 
-    normal ggA =
+    normal ggI# 
     vsplit
     wincmd h
     normal [fgg
