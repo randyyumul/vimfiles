@@ -209,6 +209,13 @@ inoremap <C-R>/ <C-O>:call formatting#StripSearchRegister()<CR><C-R>/
 " paste from registers easier (note the trailing space) {{{2
 nnoremap <Leader>p :display<CR>:put 
 
+" modify registers easier, type crq to edit register 'q'
+function! ChangeReg() abort
+  let x = nr2char(getchar())
+  call feedkeys("q:ilet @" . x . " = \<c-r>\<c-r>=string(@" . x . ")\<cr>\<esc>0f'", 'n')
+endfunction
+nnoremap cr :call ChangeReg()<cr>
+
 " better undo
 inoremap <C-W> <C-G>u<C-W>
 
