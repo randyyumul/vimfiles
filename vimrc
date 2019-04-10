@@ -349,7 +349,18 @@ command! Prose call toggles#ProseToggle()
 command! BOnly call util#BufOnly()
 
 " easily switch to corresponding test file in java
-autocmd BufNewFile,BufRead *.java command! Test Gcd | execute "find " . expand('%:t:r') . "Test.java"
+autocmd BufNewFile,BufRead *.java command! Test call TestToggle()
+
+function! TestToggle()
+    let filename=@%
+    Gcd
+    if filename =~# '.*Test.java'
+        let canonicalfile=expand('%:t:r')[:-(strlen('Test')+1)] . '.java'
+        execute "find " . canonicalfile
+    else
+        execute "find " . expand('%:t:r') . "Test.java"
+    endif
+endfunction
 
 " more text objects, courtesy of romainl: {{{2
 " https://www.reddit.com/r/vim/comments/4d6q0s/weekly_vim_tips_and_tricks_thread_4/
@@ -619,6 +630,17 @@ function! ExtractHumanReadableSlotTime()
 
     " remove old epoch times
     %s/ "\d\{10}"//e
+endfunction
+
+function! TestToggle()
+    let filename=@%
+    Gcd
+    if filename =~# '.*Test.java'
+        let canonicalfile=expand('%:t:r')[:-(strlen('Test')+1)] . '.java'
+        execute "find " . canonicalfile
+    else
+        execute "find " . expand('%:t:r') . "Test.java"
+    endif
 endfunction
 
 "When editing a file, make screen display the name of the file you are editing

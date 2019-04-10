@@ -28,7 +28,11 @@ function! toggles#ToggleFoldMethod()
 	elseif &foldmethod == "indent"
 		set foldmethod=syntax
 	elseif &foldmethod == "syntax"
+		set foldmethod=marker
+	elseif &foldmethod == "marker"
 		set foldmethod=manual
+    else
+		set foldmethod=syntax
 	endif
 	set foldmethod?
 endfunction
