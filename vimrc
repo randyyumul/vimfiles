@@ -90,7 +90,7 @@ set noswapfile                           " I almost never look at these anyway
 set showcmd                              " show how much is selected in visual mode
 set virtualedit+=block                   " allow virtual editing in visual mode
 
-runtime macros/matchit.vim           " extend % matching (on osx, better to copy plugin into .vim directory)
+packadd! matchit                         " extend % matching (on osx, better to copy plugin into .vim directory)
 
 " set background coloring and other specific things
 if findfile("~/.vimrc.local") != ""
@@ -123,7 +123,6 @@ set listchars=eol:\$,tab:>.,trail:.,extends:\
 " searching {{{2
 set hlsearch                             " highlight matched text
 set incsearch                            " incremental search
-set ignorecase                           " by default ignore case
 set nowrapscan
 
 " syntax highlighting                    {{{1
@@ -194,7 +193,7 @@ xnoremap \| y/<C-R>0\\|<C-R>/<CR>
 
 " navigate through occurrences of previous search w/in current file
 nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
-nnoremap <Space>g/ :g//#<Left><Left>
+nnoremap <Leader>g/ :g//#<Left><Left>
 vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
 
 " repeat search but within a highlighted selection  {{{2
@@ -310,7 +309,7 @@ augroup PerlMason
 	autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
 	autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
 	autocmd BufNewFile,BufRead *.mi noremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
-	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
+	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Leader>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
 	autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
 	autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
 	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) .*<C-R>0<CR>:let @/=tmpsearch<CR>
@@ -378,11 +377,6 @@ nnoremap <C-ScrollWheelUp> g+
 " Abbreviations {{{1
 cnoremap %% <C-r>=expand('%:p')<CR>
 
-" print a long commented line
-nnoremap <Leader>-- o-------------------------------------------------------------------------<Esc>
-nnoremap <Leader>-t o<Esc>:call PutTitle()<CR>
-nnoremap <Leader>= yypVr-==
-
 " misspellings
 iabbrev puase pause
 iabbrev Puase Pause
@@ -400,7 +394,6 @@ cabbrev redire redir END
 " folding settings {{{1
 set foldmethod=indent
 set foldlevel=99
-nnoremap cof :echomsg "Use yof"<CR>
 nnoremap yof :call toggles#ToggleFoldMethod()<CR>
 
 " difforig {{{1
@@ -456,6 +449,7 @@ vmap gh gc
 nnoremap <C-_> :Gcd<CR>:Files<CR>
 nnoremap <C-P> :History<CR>
 nnoremap <C-N> :Files<CR>
+nnoremap <Leader>l :Lines<CR>
 
 " EasyAlign {{{1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -480,7 +474,7 @@ let g:gutentags_cache_dir='~/temp/gutentags'
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
-nnoremap <Space>1 :call util#VinegarDrawer()<CR>
+nnoremap <Leader>1 :call util#VinegarDrawer()<CR>
 
 let g:netrw_keepdir   = 0
 let g:netrw_hide      = 1
@@ -495,7 +489,15 @@ autocmd FileType netrw SmartUnmap('T')
 
 let g:netrw_bufsettings='nomodifiable nomodified nowrap readonly nobuflisted relativenumber'
 
-" Plug (vim-plug) {{{1
+" Path {{{1
+set path+=**
+
+" Unimpaired {{{1
+nnoremap yom :call toggles#ToggleMouse()<CR>
+nnoremap yoC :call toggles#ToggleColorColumn81()<CR>
+nnoremap yoa :set invautochdir<CR>:set autochdir?<CR>
+
+" vim-plug (vim-plug) {{{1
 " https://github.com/junegunn/vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -519,14 +521,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'vimwiki/vimwiki'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'junegunn/fzf.vim'
+Plug 'stefandtw/quickfix-reflector.vim'
+
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Both options are optional. You don't have to install fzf in ~/.fzf
   " and you don't have to run the install script if you use fzf only in Vim.
 call plug#end()
-
-" Path {{{1
-set path+=**
 
 " Unimpaired {{{1
 nnoremap yom :call toggles#ToggleMouse()<CR>
