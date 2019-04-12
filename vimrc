@@ -196,8 +196,12 @@ nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
 nnoremap <Leader>g/ :g//#<Left><Left>
 vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
 
-" repeat search but within a highlighted selection  {{{2
-vnoremap <Leader>/ <Esc>/\%V<C-R><C-R>/<CR>
+" search within a highlighted selection  {{{2
+xnoremap <Leader>/v <Esc>/\%V
+
+" search w/ ignorecase off/on
+nnoremap /C /\C
+nnoremap /c /\c
 
 " better way to execute macros (assuming macro was recorded to register 'q') {{{2
 nnoremap Q @q
