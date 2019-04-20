@@ -200,8 +200,8 @@ vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
 xnoremap <Leader>/v <Esc>/\%V
 
 " search w/ ignorecase off/on
-nnoremap /C /\C
-nnoremap /c /\c
+nnoremap <Leader>/C /\C
+nnoremap <Leader>/c /\c
 
 " better way to execute macros (assuming macro was recorded to register 'q') {{{2
 nnoremap Q @q

@@ -1,6 +1,7 @@
 " work laptop vimrc configuration
 set mouse=a                              " allow use of mouse
 set background=light
+colorscheme delek
 
 " == special commands for at work ==
 
