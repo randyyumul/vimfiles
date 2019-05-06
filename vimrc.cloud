@@ -1,4 +1,4 @@
 " cloud vimrc configuration
 colorscheme default
-set background=dark
+set background=light
 set mouse=

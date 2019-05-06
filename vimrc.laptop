@@ -2,6 +2,7 @@
 set mouse=a                              " allow use of mouse
 set background=light
 colorscheme delek
+set diffopt+=algorithm:patience          " better algorithm for diffs
 
 " == special commands for at work ==
 
