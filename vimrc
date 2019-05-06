@@ -11,6 +11,8 @@ let mapleader = "\<Space>"
 nnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 vnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 
+nnoremap <Space>s :wa<CR>
+
 nnoremap <Space>h :noh<CR>
 xnoremap <Space>h :<C-U>noh<CR><ESC>gv
 
