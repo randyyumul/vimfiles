@@ -7,13 +7,12 @@ filetype off
 " must do this before any other mappings
 let mapleader = "\<Space>"
 
-" map <CR> to : but not for quickfix or command windows!!!
 " thanks to /u/meribold in this post: https://www.reddit.com/r/vim/comments/4m678o/best_way_to_remap_cr_in_normal_mode/
 nnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 vnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 
-nnoremap <Leader>h :noh<CR>
-xnoremap <Leader>h :<C-U>noh<CR><ESC>gv
+nnoremap <Space>h :noh<CR>
+xnoremap <Space>h :<C-U>noh<CR><ESC>gv
 
 " reset all autocmds
 autocmd!
@@ -36,6 +35,8 @@ if findfile("~/config/spell/en.utf-8.add") != ""
 endif
 set hidden                               " deal with multiple buffers better
 set history=1000                         " remember more than 20 commands
+set ignorecase                           " respect case if capitals part of search string                           
+set smartcase                            " respect case if capitals part of search string                           
 set linebreak                            " break at a word boundary
 set number                               " Turn on line numbering
 if version >= 800
@@ -157,7 +158,7 @@ vnoremap <C-C> "+y
 inoremap <C-B> <Esc>"+pa
 
 " replace text without killing the yank register
-xnoremap <Leader>p "_dP
+xnoremap <Space>p "_dP
 
 " better way to press escape: {{{2
 inoremap jj <Esc>:wall<CR>
@@ -184,7 +185,7 @@ xnoremap j gj
 xnoremap k gk
 
 " easier way to alternate between 2 files {{{2
-nnoremap <Leader>a :b#<CR>
+nnoremap <Space>a :b#<CR>
 nnoremap <BS> :b#<CR>
 
 " quick way to add a new search to current search {{{2
@@ -193,15 +194,15 @@ xnoremap \| y/<C-R>0\\|<C-R>/<CR>
 
 " navigate through occurrences of previous search w/in current file
 nnoremap g/ :g/<C-R><C-W>/#<CR>:normal! ``<CR>:
-nnoremap <Leader>g/ :g//#<Left><Left>
+nnoremap <Space>g/ :g//#<Left><Left>
 vnoremap g/ y:g/<C-R>0/#<CR>:normal! ``<CR>:
 
 " search within a highlighted selection  {{{2
-xnoremap <Leader>/v <Esc>/\%V
+xnoremap <Space>/v <Esc>/\%V
 
 " search w/ ignorecase off/on
-nnoremap <Leader>/C /\C
-nnoremap <Leader>/c /\c
+nnoremap <Space>/C /\C
+nnoremap <Space>/c /\c
 
 " better way to execute macros (assuming macro was recorded to register 'q') {{{2
 nnoremap Q @q
@@ -210,7 +211,7 @@ nnoremap Q @q
 inoremap <C-R>/ <C-O>:call formatting#StripSearchRegister()<CR><C-R>/
 
 " paste from registers easier (note the trailing space) {{{2
-nnoremap <Leader>p :display<CR>:put 
+nnoremap <Space>p :display<CR>:put 
 
 " modify registers easier, type crq to edit register 'q'
 function! ChangeReg() abort
@@ -234,10 +235,10 @@ set complete=.,b,w,u,t
 inoremap <C-L> <C-X><C-L>
 
 " better navigating through buffers {{{2
-nnoremap <Leader>b :ls<CR>:b
+nnoremap <Space>b :ls<CR>:b
 
 " edit current file in a new tab {{{2
-nnoremap <silent> <Leader>te <C-W>T
+nnoremap <silent> <Space>te <C-W>T
 
 " easy to move to next/prev tab {{{2
 nnoremap t gt
@@ -246,25 +247,25 @@ nnoremap T gT
 " easy open new tab {{{2
 nnoremap <silent> go :tabnew<CR>
 " do it this way so edited files can still be opened in a new tab {{{2
-nnoremap <silent> <Leader>go :tabnew<CR>:edit #<CR>
+nnoremap <silent> <Space>go :tabnew<CR>:edit #<CR>
 
 " better navigating back thru files {{{2
-nnoremap <Leader><C-O> :jumps<CR>:normal <C-O><Left>
+nnoremap <Space><C-O> :jumps<CR>:normal <C-O><Left>
 
 " navigating back thru changes {{{2
-nnoremap <Leader><C-G> :changes<CR>:normal g;<Left><Left>
+nnoremap <Space><C-G> :changes<CR>:normal g;<Left><Left>
 
 " close a buffer {{{2
-nnoremap <Leader>Q :bd!<CR>
-nnoremap <Leader>q :bd<CR>
+nnoremap <Space>Q :bd!<CR>
+nnoremap <Space>q :bd<CR>
 
 " 'e'dit 'v'imrc, and source 'v'imrc, respectively) {{{2
-nnoremap <silent> <Leader>ev :edit ~/config/vimfiles/vimrc<CR>
-nnoremap <silent> <Leader>sv :source ~/config/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 1<CR>:echomsg ""<CR>
+nnoremap <silent> <Space>ev :edit ~/config/vimfiles/vimrc<CR>
+nnoremap <silent> <Space>sv :source ~/config/vimfiles/vimrc<CR>:echomsg "sourced vimrc"<CR>:sleep 1<CR>:echomsg ""<CR>
 
 " yank filename to clipboard {{{2
-nnoremap <Leader>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
-nnoremap <Leader>Y% :let @+=expand('%:p')<CR>:let @"=expand('%:p')<CR>
+nnoremap <Space>y% :let @+=expand('%')<CR>:let @"=expand('%')<CR>
+nnoremap <Space>Y% :let @+=expand('%:p')<CR>:let @"=expand('%:p')<CR>
 
 " visually search for highlighted text
 xnoremap * y/<C-R>0<CR>
@@ -313,7 +314,7 @@ augroup PerlMason
 	autocmd BufNewFile,BufRead *.mi set commentstring=#\ %s
 	autocmd BufNewFile,BufRead *.mi noremap <buffer> [m ?<%\(def\\|method\) \zs\S*\ze><CR>
 	autocmd BufNewFile,BufRead *.mi noremap <buffer> ]m /<%\(def\\|method\) \zs\S*\ze><CR>
-	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Leader>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
+	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <Space>gm :g/<%\(def\\|method\) \zs\S*\ze>/#<CR>:normal! ``<CR>:
 	autocmd BufNewFile,BufRead *.pm noremap <buffer> [m ?^sub<CR>
 	autocmd BufNewFile,BufRead *.pm noremap <buffer> ]m /^sub<CR>
 	autocmd BufNewFile,BufRead *.mi nnoremap <buffer> <C-]> yiw:keepjumps normal gg<CR>:let tmpsearch=@/<CR>/<%\(def\\|method\) .*<C-R>0<CR>:let @/=tmpsearch<CR>
@@ -323,7 +324,7 @@ augroup PerlMason
 augroup END
 
 " Using BufLeave with this autocmd disallows the use of ToggleDiffOrig() {{{2
-if version == 800
+if version >= 800
 	augroup RMYGroup
 		autocmd!
 		autocmd RMYGroup InsertEnter * set norelativenumber
@@ -406,8 +407,8 @@ if !exists(":DiffOrig")
 endif
 
 " 'd'iff 'o'rig, and use 'd'iff key 'm'apping
-nnoremap <Leader>do :call formatting#ToggleDiffOrig()<CR>
-nnoremap <Leader>dh :call Diff1HourAgo( '1h' )<CR>
+nnoremap <Space>do :call formatting#ToggleDiffOrig()<CR>
+nnoremap <Space>dh :call Diff1HourAgo( '1h' )<CR>
 
 " Ag {{{1
 " The Silver Searcher
@@ -453,7 +454,7 @@ vmap gh gc
 nnoremap <C-_> :Gcd<CR>:Files<CR>
 nnoremap <C-P> :History<CR>
 nnoremap <C-N> :Files<CR>
-nnoremap <Leader>l :Lines<CR>
+nnoremap <Space>l :Lines<CR>
 
 " EasyAlign {{{1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -478,7 +479,7 @@ let g:gutentags_cache_dir='~/temp/gutentags'
 
 " Netrw {{{1
 nnoremap - :call util#Vinegar()<CR>
-nnoremap <Leader>1 :call util#VinegarDrawer()<CR>
+nnoremap <Space>1 :call util#VinegarDrawer()<CR>
 
 let g:netrw_keepdir   = 0
 let g:netrw_hide      = 1
@@ -526,6 +527,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'junegunn/fzf.vim'
 Plug 'stefandtw/quickfix-reflector.vim'
+Plug 'airblade/vim-gitgutter'
 
 " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -548,7 +550,7 @@ nnoremap yoz :call toggles#ToggleConcealLevel()<CR>
 " if I put this in ftplugin, the mapping won't exist when opening a brand new
 " *.md file from the command line
 augroup MyVimWiki
-	autocmd BufNewFile,BufRead *.md nnoremap <buffer> <Leader>D :call util#LogDiaryDate()<CR>
+	autocmd BufNewFile,BufRead *.md nnoremap <buffer> <Space>D :call util#LogDiaryDate()<CR>
 	autocmd BufNewFile,BufRead *.md set nocindent formatoptions=t textwidth=0 foldmethod=syntax expandtab
 
 	" easy removal of [ ] tasks
