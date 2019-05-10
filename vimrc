@@ -11,7 +11,11 @@ let mapleader = "\<Space>"
 nnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 vnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 
-nnoremap <Space>s :wa<CR>
+nnoremap ; :
+nnoremap , ;
+nnoremap : ,
+
+nnoremap S :wall<CR>:echomsg "Saved all files."<CR>
 
 nnoremap <Space>h :noh<CR>
 xnoremap <Space>h :<C-U>noh<CR><ESC>gv
@@ -163,17 +167,14 @@ inoremap <C-B> <Esc>"+pa
 xnoremap <Space>p "_dP
 
 " better way to press escape: {{{2
-inoremap jj <Esc>:wall<CR>
-inoremap kk <Esc>:wall<CR>
-inoremap kj <Esc>:wall<CR>
-inoremap jk <Esc>:wall<CR>
+inoremap jj <Esc>:wall<CR>:echomsg "Saved all files."<CR>
+inoremap kk <Esc>:wall<CR>:echomsg "Saved all files."<CR>
+inoremap kj <Esc>:wall<CR>:echomsg "Saved all files."<CR>
+inoremap jk <Esc>:wall<CR>:echomsg "Saved all files."<CR>
 cnoremap kj <Esc>
 cnoremap jk <Esc>
 cnoremap jj <Esc>
 cnoremap kk <Esc>
-
-" quick save {{{2
-nnoremap S :wa<CR>
 
 " navigate wrapped lines easier
 nnoremap gj j
@@ -468,6 +469,7 @@ nmap ga <Plug>(EasyAlign)
 
 " Fugitive {{{1
 nnoremap <F5> :Gstatus<CR>
+nnoremap <Space>D :Gdiff<CR>
 
 " search from the top level .git directory for word under the cursor
 " (chose F7 because CMD+F7 is show variable usage w/in IntelliJ)
