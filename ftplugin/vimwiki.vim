@@ -2,3 +2,4 @@
 nmap <buffer> g- <Plug>VimwikiRemoveHeaderLevel
 nmap <buffer> g= <Plug>VimwikiAddHeaderLevel
 
+nmap <C-]> <Plug>VimwikiFollowLink

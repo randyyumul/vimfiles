@@ -11,10 +11,6 @@ let mapleader = "\<Space>"
 nnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 vnoremap <expr> <CR> empty(&buftype) \|\| &bt ==# 'help' \|\| &ft ==# 'man' ?  ':' : '<CR>'
 
-nnoremap ; :
-nnoremap , ;
-nnoremap : ,
-
 nnoremap S :wall<CR>:echomsg "Saved all files."<CR>
 
 nnoremap <Space>h :noh<CR>
